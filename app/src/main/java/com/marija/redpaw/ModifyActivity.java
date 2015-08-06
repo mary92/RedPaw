@@ -104,6 +104,10 @@ public class ModifyActivity extends ActionBarActivity {
     }
 
     public void onClickBtnSave(View view) {
+        TextView description = (TextView)findViewById(R.id.modify_fieldDescription);
+
+        //Animal animal = new Animal(description.getText(), )
+
 
     }
 }
