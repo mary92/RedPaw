@@ -10,7 +10,6 @@ public class Animal {
     private String description;
     private Type type;
     private Bitmap img;
-    public enum Type{Cat, Dog, Other} ;
 
     //Empty constructor
     public Animal(){}
