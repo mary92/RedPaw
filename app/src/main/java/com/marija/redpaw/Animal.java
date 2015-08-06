@@ -3,10 +3,12 @@ package com.marija.redpaw;
 import android.graphics.Bitmap;
 import android.view.animation.AnticipateInterpolator;
 
+import java.io.Serializable;
+
 /**
  * Container class for an animal object.
  */
-public class Animal {
+public class Animal implements Serializable {
     private String description;
     private Type type;
     private String img;
