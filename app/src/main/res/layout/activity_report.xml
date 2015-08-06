@@ -20,13 +20,15 @@
         android:id="@+id/report_btnLocate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Locate"/>
+        android:text="Locate"
+        android:onClick="onClickBtnLocate"/>
 
     <Button
         android:id="@+id/report_btnUploadPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take photo"/>
+        android:text="Take photo"
+        android:onClick="onClickBtnUploadPhoto"/>
 m
     <ImageView
         android:id="@+id/report_imgViewPhoto"
@@ -52,6 +54,7 @@ m
         android:id="@+id/report_btnReport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Report"/>
+        android:text="Report"
+        android:onClick="onClickBtnReport"/>
 
 </RelativeLayout>
