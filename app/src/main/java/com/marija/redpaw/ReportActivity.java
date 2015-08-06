@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +22,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
+import java.io.ByteArrayOutputStream;
+
 /**
  * Created by demouser on 8/6/15.
  */
@@ -28,22 +34,29 @@ public class ReportActivity extends Activity {
     private Location lastKnownLocation;
     private  LocationManager locationManager;
     private LocationListener locationListener;
+    private Bitmap image;
+    private Firebase referenceReports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+        // Get reference to reports database
+        Firebase.setAndroidContext(this);
+        referenceReports=new Firebase(getString(R.string.database_reports));
     }
 
     public void onClickBtnLocate (View view) {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
+        //String locationProvider = LocationManager.NETWORK_PROVIDER;
+        String locationProvider = LocationManager.GPS_PROVIDER;
         // Or use LocationManager.GPS_PROVIDER
 
         lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        Log.d("carolina", "lastknownlocation : " + lastKnownLocation.toString());
+        if(lastKnownLocation != null)
+            Log.d("carolina", "lastknownlocation : " + lastKnownLocation.toString());
 
         // Define a listener that responds to location updates
         locationListener = new LocationListener() {
@@ -53,6 +66,9 @@ public class ReportActivity extends Activity {
                 EditText fieldLocation = (EditText) findViewById(R.id.report_fieldLocation);
                 fieldLocation.setText(String.format("[%.5f, %.5f]", lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()));
                 Log.d("carolina", "Got location onLocationChanged");
+
+                // Tell the location manager that we don't want to know the location anymore
+                locationManager.removeUpdates(locationListener);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -86,9 +102,9 @@ public class ReportActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            image = (Bitmap) extras.get("data");
             ImageView imgViewPhoto = (ImageView) findViewById(R.id.report_imgViewPhoto);
-            imgViewPhoto.setImageBitmap(imageBitmap);
+            imgViewPhoto.setImageBitmap(image);
         }
     }
 
@@ -97,11 +113,27 @@ public class ReportActivity extends Activity {
         EditText fieldLocation = (EditText) findViewById(R.id.report_fieldLocation);
         EditText fieldDescription = (EditText) findViewById(R.id.report_fieldDescription);
 
-        Intent intent = new Intent(ReportActivity.this, MainActivity.class);
-        startActivity(intent);
+        Bitmap imageToUpload;
+        if(image == null) {
+            imageToUpload = BitmapFactory.decodeResource(getResources(),R.drawable.default_dog);
+        } else {
+            imageToUpload = image;
+        }
+
+
+
+
+        Report report = new Report(fieldDescription.getText().toString(), Type.Dog, imageToUpload, lastKnownLocation);
+
+        referenceReports.push().setValue(report);
+
+        Log.d("carolina", "Report reported!");
 
         // Tell the location manager that we don't want to know the location anymore
         locationManager.removeUpdates(locationListener);
+
+        Intent intent = new Intent(ReportActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

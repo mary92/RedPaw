@@ -1,6 +1,9 @@
 package com.marija.redpaw;
 
+import android.graphics.Bitmap;
 import android.location.Location;
+
+import com.firebase.client.core.Repo;
 
 import java.util.Date;
 
@@ -52,6 +55,13 @@ public class Report {
 
     public Report(Animal animal, Location location){
         this.setAnimal(animal);
+        this.setLocation(location);
+        status=Status.REPORTED;
+        timestamp=new Date();
+    }
+
+    public Report(String description, Type type, Bitmap img, Location location) {
+        animal = new Animal(description, type, img);
         this.setLocation(location);
         status=Status.REPORTED;
         timestamp=new Date();
