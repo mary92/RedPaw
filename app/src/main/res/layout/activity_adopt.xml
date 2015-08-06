@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".AdoptActivity">
 
-    <!--<include-->
-        <!--android:id="@+id/adopt_toolbar"-->
-        <!--layout="@layout/toolbar"/>-->
+    <include
+        android:id="@+id/adopt_toolbar"
+        layout="@layout/toolbar"/>
 
     <EditText
         android:id="@+id/adopt_fieldSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/adopt_toolbar"
         android:layout_toLeftOf="@+id/adopt_btnSearch"
         android:background="#ffffff"
         android:layout_margin="8dp"
@@ -22,6 +23,7 @@
 
     <Button
         android:id="@+id/adopt_btnSearch"
+        android:layout_below="@id/adopt_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

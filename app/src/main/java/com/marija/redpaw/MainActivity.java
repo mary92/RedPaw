@@ -22,14 +22,13 @@ public class MainActivity extends ActionBarActivity {
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
-        actionToolbar.setTitle("Naslov");
     }
 
     @Override
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
-        actionToolbar.setTitle("      Red paw");
+        actionToolbar.setTitle("   Red paw");
     }
 
     public void onClickBtnFound(View view){
