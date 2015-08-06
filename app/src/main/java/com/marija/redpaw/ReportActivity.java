@@ -11,7 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
+import 	android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +29,7 @@ import java.io.ByteArrayOutputStream;
 /**
  * Created by demouser on 8/6/15.
  */
-public class ReportActivity extends Activity {
+public class ReportActivity extends ActionBarActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private Location lastKnownLocation;
     private  LocationManager locationManager;
@@ -44,6 +44,16 @@ public class ReportActivity extends Activity {
         // Get reference to reports database
         Firebase.setAndroidContext(this);
         referenceReports=new Firebase(getString(R.string.database_reports));
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
+        actionToolbar.setTitle("   Red paw");
     }
 
     public void onClickBtnLocate (View view) {
