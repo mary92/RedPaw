@@ -102,4 +102,8 @@ public class ModifyActivity extends ActionBarActivity {
             imgViewPhoto.setImageBitmap(image);
         }
     }
+
+    public void onClickBtnSave(View view) {
+
+    }
 }
