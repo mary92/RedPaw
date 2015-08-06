@@ -69,37 +69,38 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="15">
+            android:layout_weight="10">
 
             <Button
                 android:id="@+id/report_btnLocate"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:text="Locate"
                 android:layout_alignParentLeft="true"
                 android:onClick="onClickBtnLocate"/>
 
+            <Button
+                android:id="@+id/report_btnReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Report"
+                android:layout_alignParentRight="true"
+                android:onClick="onClickBtnReport"/>
+
             <EditText
                 android:id="@+id/report_fieldLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_margin="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:background="#ffffff"
-                android:padding="5dp"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
                 android:hint="Your location"
-                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@id/report_btnReport"
                 android:layout_toRightOf="@id/report_btnLocate"
                 android:text=""/>
 
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/report_btnReport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Report"
-            android:layout_gravity="right"
-            android:onClick="onClickBtnReport"/>
 
     </LinearLayout>
 
