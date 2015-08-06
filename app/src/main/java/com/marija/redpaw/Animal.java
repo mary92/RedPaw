@@ -9,12 +9,12 @@ import android.view.animation.AnticipateInterpolator;
 public class Animal {
     private String description;
     private Type type;
-    private Bitmap img;
+    private String img;
 
     //Empty constructor
     public Animal(){}
 
-    public Animal(String description, Type type, Bitmap img ){
+    public Animal(String description, Type type, String img ){
         this.description=description;
         this.type=type;
         this.img=img;
@@ -36,11 +36,11 @@ public class Animal {
         this.type=type;
     }
 
-    public Bitmap getImg(){
+    public String getImg(){
         return img;
     }
 
-    public void setImg(Bitmap img){
+    public void setImg(String img){
         this.img=img;
     }
 

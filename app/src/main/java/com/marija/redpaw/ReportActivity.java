@@ -119,11 +119,8 @@ public class ReportActivity extends Activity {
         } else {
             imageToUpload = image;
         }
-
-
-
-
-        Report report = new Report(fieldDescription.getText().toString(), Type.Dog, imageToUpload, lastKnownLocation);
+        
+        Report report = new Report(fieldDescription.getText().toString(), Type.Dog, Util.bitmapToString(imageToUpload), lastKnownLocation);
 
         referenceReports.push().setValue(report);
 
