@@ -13,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -21,14 +24,14 @@ import java.util.ArrayList;
  * Created by demouser on 8/6/15.
  */
 public class AdoptActivity extends ActionBarActivity {
-    private ArrayList<Animal> animalsInShelter;
+    private ArrayList<Pair> animalsInShelter;
     private ListView listView;
     private Firebase referenceShelters;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        animalsInShelter=new ArrayList<Animal>();
+        animalsInShelter=new ArrayList<Pair>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adopt);
         // Get refernecse to shelters database
@@ -40,7 +43,25 @@ public class AdoptActivity extends ActionBarActivity {
         MyAdapter listViewAdapter=new MyAdapter();
         listView.setAdapter(listViewAdapter);
 
+        referenceShelters.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Shelter currentShelter;
+                ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    currentShelter = dataSnapshot1.getValue(Shelter.class);
+                    for(Animal animal:currentShelter.getAnimals()){
+                        animalsInShelter.add(new Pair(animal,currentShelter));
+                    }
+                }
+                ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
     }
 
     @Override
@@ -88,7 +109,7 @@ public class AdoptActivity extends ActionBarActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view ;
             ViewHolder viewHolder;
-            Animal currentAnimal=animalsInShelter.get(position%animalsInShelter.size());
+            Pair currentPair=animalsInShelter.get(position%animalsInShelter.size());
             if(convertView!=null ){
                 view=convertView;
                 viewHolder=(ViewHolder)view.getTag();
@@ -103,10 +124,24 @@ public class AdoptActivity extends ActionBarActivity {
                 view.setTag(viewHolder);
             }
             // Set values in images.
-            viewHolder.img.setImageBitmap(currentAnimal.getImg());
-            viewHolder.description.setText(currentAnimal.getDescription());
+            viewHolder.img.setImageBitmap(currentPair.animal.getImg());
+            viewHolder.description.setText(currentPair.animal.getDescription());
+            viewHolder.shelter.setText(currentPair.shelter.getName());
             //viewHolder.shelter.setText();<---- Where do we get the shelter from?
             return view;
+        }
+    }
+
+    /*
+    Needed to keep track of each animal's shelter.
+     */
+    public class Pair{
+        public Animal animal;
+        public Shelter shelter;
+
+        public Pair(Animal animal, Shelter shelter){
+            this.animal=animal;
+            this.shelter=shelter;
         }
     }
 
