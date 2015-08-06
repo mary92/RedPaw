@@ -17,6 +17,7 @@
         android:background="#ffffff"
         android:layout_margin="8dp"
         android:padding="5dp"
+        android:hint="Search term"
         android:text=""/>
 
     <Button
@@ -30,6 +31,7 @@
         android:id="@+id/adopt_listViewResults"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/adopt_fieldSearch">
     </ListView>
 
