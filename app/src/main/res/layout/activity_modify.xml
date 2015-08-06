@@ -42,9 +42,9 @@
                 android:layout_weight="40"
                 android:padding="8dp"
                 android:layout_gravity="center_vertical"
-                android:layout_below="@id/report_imgViewPhoto"
-                android:layout_alignLeft="@id/report_imgViewPhoto"
-                android:layout_alignRight="@id/report_imgViewPhoto"
+                android:layout_below="@id/modify_imgViewPhoto"
+                android:layout_alignLeft="@id/modify_imgViewPhoto"
+                android:layout_alignRight="@id/modify_imgViewPhoto"
                 android:onClick="onClickBtnUploadPhoto"/>
 
 
@@ -66,9 +66,9 @@
             android:padding="8dp"
             android:gravity="top"
             android:layout_marginTop="15dp"
-            android:layout_below="@id/report_animalType"
-            android:layout_alignLeft="@+id/report_fieldLocation"
-            android:layout_alignRight="@+id/report_btnLocate"
+            android:layout_below="@id/modify_animalType"
+            android:layout_alignLeft="@+id/modify_fieldLocation"
+            android:layout_alignRight="@+id/modify_btnLocate"
             android:hint="A brief description"
             android:text=""/>
 
