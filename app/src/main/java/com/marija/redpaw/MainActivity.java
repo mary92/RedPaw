@@ -15,22 +15,16 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btnFound=(Button)findViewById(R.id.main_btnFound);
-        btnFound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ReportActivity.class);
-                startActivity(intent);
-            }
-        });
-        Button btnAdopt=(Button)findViewById(R.id.main_btnAdopt);
-        btnAdopt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AdoptActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
+
+    public void onClickBtnFound(View view){
+        Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickBtnAdopt(View view){
+        Intent intent = new Intent(MainActivity.this, AdoptActivity.class);
+        startActivity(intent);
     }
 
     @Override
