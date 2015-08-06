@@ -59,14 +59,12 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.menu_settings) {
             Intent intent = new Intent(MainActivity.this, PickUpActivity.class);
             startActivity(intent);
+        } else
+        if (id == R.id.menu_shelter_login) {
+            Intent i = new Intent(MainActivity.this, AnimalsActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void showAnimals(MenuItem item) {
-        Intent i = new Intent(MainActivity.this, AnimalsActivity.class);
-        i.setAction(Intent.ACTION_VIEW);
-        startActivity(i);
     }
 }
