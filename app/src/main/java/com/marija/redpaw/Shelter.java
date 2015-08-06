@@ -13,9 +13,7 @@ public class Shelter {
     private String description;
     private List<Animal> animals;
 
-    public Shelter() {
-
-    }
+    public Shelter() {}
 
     public String getId() {
         return id;
