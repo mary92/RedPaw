@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -109,39 +110,6 @@ public class ReportActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private class AnimalAdapter extends BaseAdapter implements SpinnerAdapter{
-        String[] animals = {"Cat", "Dog", "Other"};
-
-        @Override
-        public int getCount() {
-            return animals.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return animals[position%animals.length];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView view;
-
-            if(convertView == null) {
-                view = new TextView(ReportActivity.this);
-            } else {
-                view = (TextView)convertView;
-            }
-
-            view.setText(animals[position]);
-            return view;
-        }
     }
 
     public void onClickBtnLocate (View view) {
@@ -258,4 +226,36 @@ public class ReportActivity extends ActionBarActivity {
         }
     }
 
+    private class AnimalAdapter extends BaseAdapter implements SpinnerAdapter{
+        String[] animals = {"Cat", "Dog", "Other"};
+
+        @Override
+        public int getCount() {
+            return animals.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return animals[position%animals.length];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view;
+
+            if(convertView == null) {
+                view = (TextView)LayoutInflater.from(ReportActivity.this).inflate(android.R.layout.simple_spinner_dropdown_item,null);
+            } else {
+                view = (TextView)convertView;
+            }
+
+            view.setText(animals[position]);
+            return view;
+        }
+    }
 }
