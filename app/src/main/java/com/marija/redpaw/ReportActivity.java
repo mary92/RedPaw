@@ -3,11 +3,13 @@ package com.marija.redpaw;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.widget.Toast;
  * Created by demouser on 8/6/15.
  */
 public class ReportActivity extends Activity {
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private Location lastKnownLocation;
     private  LocationManager locationManager;
     private LocationListener locationListener;
@@ -73,7 +76,20 @@ public class ReportActivity extends Activity {
     }
 
     public void onClickBtnUploadPhoto (View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ImageView imgViewPhoto = (ImageView) findViewById(R.id.report_imgViewPhoto);
+            imgViewPhoto.setImageBitmap(imageBitmap);
+        }
     }
 
     public void onClickBtnReport (View view) {
