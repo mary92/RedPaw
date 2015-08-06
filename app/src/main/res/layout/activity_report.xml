@@ -20,8 +20,10 @@
 
     <ImageView
         android:id="@+id/report_imgViewPhoto"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"
         android:src="@drawable/placeholder"/>
 
@@ -30,23 +32,32 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Upload Photo"
+        android:layout_margin="10dp"
         android:layout_below="@id/report_imgViewPhoto"
         android:layout_alignLeft="@id/report_imgViewPhoto"
         android:layout_alignRight="@id/report_imgViewPhoto"
         android:onClick="onClickBtnUploadPhoto"/>
 
+    <Spinner
+        android:id="@+id/report_animalType"
+        android:prompt="@string/type_prompt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/report_btnUploadPhoto">
+
+    </Spinner>
 
     <EditText
         android:id="@+id/report_fieldDescription"
         android:layout_width="fill_parent"
-        android:layout_height="128dp"
+        android:layout_height="32dp"
         android:background="#ffffff"
         android:padding="5dp"
-        android:layout_marginLeft="10dp"
         android:gravity="top"
-        android:layout_toRightOf="@id/report_imgViewPhoto"
-        android:layout_alignTop="@id/report_imgViewPhoto"
-        android:layout_alignBottom="@id/report_btnUploadPhoto"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/report_animalType"
+        android:layout_alignLeft="@+id/report_fieldLocation"
+        android:layout_alignRight="@+id/report_btnLocate"
         android:hint="A brief description"
         android:text=""/>
 
@@ -65,8 +76,8 @@
         android:layout_height="wrap_content"
         android:text="Locate"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/report_btnUploadPhoto"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/report_fieldDescription"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:onClick="onClickBtnLocate"/>
 
@@ -78,7 +89,7 @@
         android:padding="5dp"
         android:hint="Your location"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/report_btnUploadPhoto"
+        android:layout_below="@id/report_fieldDescription"
         android:layout_alignTop="@id/report_btnLocate"
         android:layout_toLeftOf="@id/report_btnLocate"
         android:text=""/>
