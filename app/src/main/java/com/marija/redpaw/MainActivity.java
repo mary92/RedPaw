@@ -63,4 +63,10 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void showAnimals(MenuItem item) {
+        Intent i = new Intent(MainActivity.this, AnimalsActivity.class);
+        i.setAction(Intent.ACTION_VIEW);
+        startActivity(i);
+    }
 }

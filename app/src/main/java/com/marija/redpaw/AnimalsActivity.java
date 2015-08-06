@@ -1,5 +1,6 @@
 package com.marija.redpaw;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -47,6 +48,17 @@ public class AnimalsActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         sheltersDB = new Firebase(getString(R.string.database_shelters));
         addDBListener();
+
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
+        actionToolbar.setTitle("   All Animals");
     }
 
     private void addDBListener() {

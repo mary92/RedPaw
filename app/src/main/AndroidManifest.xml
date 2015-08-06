@@ -28,22 +28,30 @@
         <activity
             android:name=".ReportActivity"
             android:label="Report" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".PickUpActivity"
             android:label="PickUp" >
-        </activity>
-        <activity
-            android:name=".AnimalsActivity"
-            android:label="Animals" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".AdoptActivity"
             android:label="Adopt" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ModifyActivity"
             android:label="Modify" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
 
         <meta-data
@@ -54,6 +62,9 @@
             android:name=".AdoptMapActivity"
             android:label="@string/title_activity_adopt_map"
             android:parentActivityName=".AdoptActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.marija.redpaw.AdoptActivity" />
@@ -62,8 +73,8 @@
             android:name=".AnimalsActivity"
             android:label="Red Paw">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+        </intent-filter>
         </activity>
         </application>
 </manifest>
