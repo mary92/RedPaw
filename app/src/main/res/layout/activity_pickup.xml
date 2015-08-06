@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PickUpActivity">
+
+
+    <include
+        android:id="@+id/pickup_toolbar"
+        layout="@layout/toolbar"/>
+
+    <Button
+        android:id="@+id/pickup_shelter"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Pick up!"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/pickup_imgViewPhoto"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/placeholder"
+        android:layout_above="@id/pickup_shelter"/>
+
+    <TextView
+        android:id="@+id/pickup_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="12sp"
+        android:layout_toRightOf="@id/pickup_imgViewPhoto"
+        android:layout_alignTop="@id/pickup_imgViewPhoto"/>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        class="com.google.android.gms.maps.MapFragment"
+        tools:layout = "@layout/fragment_map"
+        android:layout_below="@id/pickup_toolbar"
+        android:layout_above="@+id/pickup_imgViewPhoto"
+        />
+
+
+
+
+
+</RelativeLayout>

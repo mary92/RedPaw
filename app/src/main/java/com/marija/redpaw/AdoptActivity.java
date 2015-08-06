@@ -38,30 +38,15 @@ public class AdoptActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         referenceShelters=new Firebase(getString(R.string.database_shelters));
 
-        //Add adapter to list view.
+        // Add adapter to list view.
         listView=(ListView)findViewById(R.id.adopt_listViewResults);
         MyAdapter listViewAdapter=new MyAdapter();
         listView.setAdapter(listViewAdapter);
 
-        referenceShelters.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Shelter currentShelter;
-                ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
-                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                    currentShelter = dataSnapshot1.getValue(Shelter.class);
-                    for(Animal animal:currentShelter.getAnimals()){
-                        animalsInShelter.add(new Pair(animal,currentShelter));
-                    }
-                }
-                ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
-            }
+        // Add database event listener
+        referenceShelters.addValueEventListener(new DBEventListener());
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
+        // Widget Toolbar.
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.adopt_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
@@ -71,7 +56,9 @@ public class AdoptActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.adopt_toolbar);
-        actionToolbar.setTitle("   Find a New Friend");
+        actionToolbar.setTitle("   Red paw");
+        // Add database event listener.
+        
     }
 
     @Override
@@ -79,6 +66,12 @@ public class AdoptActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void onClickBtnSrch(View view){}
+
+    public void onClickBtnMap(View view){
+
     }
 
     @Override
@@ -120,6 +113,7 @@ public class AdoptActivity extends ActionBarActivity {
             View view ;
             ViewHolder viewHolder;
             Pair currentPair=animalsInShelter.get(position%animalsInShelter.size());
+            // Reuse views.
             if(convertView!=null ){
                 view=convertView;
                 viewHolder=(ViewHolder)view.getTag();
@@ -139,6 +133,29 @@ public class AdoptActivity extends ActionBarActivity {
             viewHolder.shelter.setText(currentPair.shelter.getName());
             //viewHolder.shelter.setText();<---- Where do we get the shelter from?
             return view;
+        }
+    }
+
+    public class DBEventListener implements ValueEventListener {
+        @Override
+        public void onDataChange(DataSnapshot snapshot) {
+            Shelter currentShelter;
+            ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
+            // Go through all of the shelters.
+            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                currentShelter = dataSnapshot1.getValue(Shelter.class);
+                // Go through all of the animals in this shelter.
+                for(Animal animal:currentShelter.getAnimals()){
+                    animalsInShelter.add(new Pair(animal,currentShelter));
+                }
+            }
+            // Force the view to update.
+            ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+            System.out.println("The read failed: " + firebaseError.getMessage());
         }
     }
 
