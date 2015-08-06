@@ -124,7 +124,7 @@ public class AdoptActivity extends ActionBarActivity {
                 view.setTag(viewHolder);
             }
             // Set values in images.
-            viewHolder.img.setImageBitmap(currentPair.animal.getImg());
+            viewHolder.img.setImageBitmap(Util.stringToBitmap(currentPair.animal.getImg()));
             viewHolder.description.setText(currentPair.animal.getDescription());
             viewHolder.shelter.setText(currentPair.shelter.getName());
             //viewHolder.shelter.setText();<---- Where do we get the shelter from?
