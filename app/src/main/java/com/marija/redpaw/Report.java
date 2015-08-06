@@ -60,7 +60,7 @@ public class Report {
         timestamp=new Date();
     }
 
-    public Report(String description, Type type, Bitmap img, Location location) {
+    public Report(String description, Type type, String img, Location location) {
         animal = new Animal(description, type, img);
         this.setLocation(location);
         status=Status.REPORTED;
