@@ -14,12 +14,14 @@
         android:id="@+id/main_btnFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickBtnFound"
         android:text="Found"/>
 
     <Button
         android:id="@+id/main_btnAdopt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickBtnAdopt"
         android:layout_toRightOf="@id/main_btnFound"
         android:text="Adopt"/>
 
