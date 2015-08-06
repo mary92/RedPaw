@@ -1,5 +1,6 @@
 package com.marija.redpaw;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -96,6 +97,11 @@ public class AdoptActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onMapButtonClicked(View view){
+        Intent intent = new Intent(AdoptActivity.this, AdoptMapActivity.class);
+        startActivity(intent);
+    }
+
     public class MyAdapter extends BaseAdapter {
 
         @Override
@@ -140,6 +146,8 @@ public class AdoptActivity extends ActionBarActivity {
             //viewHolder.shelter.setText();<---- Where do we get the shelter from?
             return view;
         }
+
+
     }
 
     /*

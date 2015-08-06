@@ -34,16 +34,28 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_below="@id/adopt_fieldSearch">
+        android:layout_below="@id/adopt_fieldSearch"
+        android:layout_above="@+id/adopt_btnList">
     </ListView>
 
+    <Button
+        android:id="@+id/adopt_btnList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="View List"
+        android:clickable="false"
+        />
     <Button
         android:id="@+id/adopt_btnMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="View Map"/>
+        android:layout_toRightOf="@id/adopt_btnList"
+        android:text="View Map"
+        android:onClick="onMapButtonClicked"
+        />
 
 
 </RelativeLayout>

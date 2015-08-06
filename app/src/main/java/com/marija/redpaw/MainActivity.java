@@ -57,7 +57,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_settings) {
-            return true;
+            Intent intent = new Intent(MainActivity.this, PickUpActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

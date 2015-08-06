@@ -11,6 +11,7 @@
     <color name="red">#da5959</color>
     <color name="darker_red">#ba3939</color>
     <color name="gray">#F0F0F0</color>
+    <string name="title_activity_adopt_map">AdoptMapActivity</string>
 
 
 </resources>

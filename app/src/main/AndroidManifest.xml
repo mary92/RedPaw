@@ -4,8 +4,12 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Google MAP API key -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,23 +27,36 @@
 
         <activity
             android:name=".ReportActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-
-            </intent-filter>
+            android:label="Report" >
+        </activity>
+        <activity
+            android:name=".PickUpActivity"
+            android:label="PickUp" >
+        </activity>
+        <activity
+            android:name=".AnimalsActivity"
+            android:label="Animals" >
         </activity>
         <activity
             android:name=".AdoptActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:label="Adopt" >
+        </activity>
+        <activity
+            android:name=".ModifyActivity"
+            android:label="Modify" >
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCHwsfaxNChArFoPfnP7H3FnHVB_PuEJeM" />
+
+        <activity
+            android:name=".AdoptMapActivity"
+            android:label="@string/title_activity_adopt_map"
+            android:parentActivityName=".AdoptActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.marija.redpaw.AdoptActivity" />
         </activity>
         <activity
             android:name=".AnimalsActivity"
