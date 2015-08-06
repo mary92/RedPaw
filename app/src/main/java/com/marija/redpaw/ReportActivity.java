@@ -108,29 +108,49 @@ public class ReportActivity extends Activity {
         }
     }
 
+
+    /*
+        If the user clicks on the Report button. Then a Report object is created and uploaded to the
+        reports database.
+     */
     public void onClickBtnReport (View view) {
-        ImageView imgViewPhoto = (ImageView) findViewById(R.id.report_imgViewPhoto);
-        EditText fieldLocation = (EditText) findViewById(R.id.report_fieldLocation);
         EditText fieldDescription = (EditText) findViewById(R.id.report_fieldDescription);
 
-        Bitmap imageToUpload;
-        if(image == null) {
-            imageToUpload = BitmapFactory.decodeResource(getResources(),R.drawable.default_dog);
+        if(lastKnownLocation == null) {
+            Context context = getApplicationContext();
+            CharSequence text = "Please provide a location";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        } else if(image == null && fieldDescription.getText().equals("A brief description")) {
+            Context context = getApplicationContext();
+            CharSequence text = "Please provide a picture or a description";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         } else {
-            imageToUpload = image;
+            ImageView imgViewPhoto = (ImageView) findViewById(R.id.report_imgViewPhoto);
+            EditText fieldLocation = (EditText) findViewById(R.id.report_fieldLocation);
+
+            Bitmap imageToUpload;
+            if (image == null) {
+                imageToUpload = BitmapFactory.decodeResource(getResources(), R.drawable.default_dog);
+            } else {
+                imageToUpload = image;
+            }
+
+            Report report = new Report(fieldDescription.getText().toString(), Type.Dog, Util.bitmapToString(imageToUpload), lastKnownLocation);
+
+            referenceReports.push().setValue(report);
+
+            // Tell the location manager that we don't want to know the location anymore
+            locationManager.removeUpdates(locationListener);
+
+            Intent intent = new Intent(ReportActivity.this, MainActivity.class);
+            startActivity(intent);
         }
-        
-        Report report = new Report(fieldDescription.getText().toString(), Type.Dog, Util.bitmapToString(imageToUpload), lastKnownLocation);
-
-        referenceReports.push().setValue(report);
-
-        Log.d("carolina", "Report reported!");
-
-        // Tell the location manager that we don't want to know the location anymore
-        locationManager.removeUpdates(locationListener);
-
-        Intent intent = new Intent(ReportActivity.this, MainActivity.class);
-        startActivity(intent);
     }
 
     @Override
