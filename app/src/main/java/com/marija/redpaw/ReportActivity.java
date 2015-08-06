@@ -44,6 +44,7 @@ public class ReportActivity extends ActionBarActivity {
     private Bitmap image;
     private Firebase referenceReports;
     private Type type;
+    private AnimalSpinnerOnItemSelectListener spinnerListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,31 +53,13 @@ public class ReportActivity extends ActionBarActivity {
         // Get reference to reports database
         Firebase.setAndroidContext(this);
         referenceReports=new Firebase(getString(R.string.database_reports));
+
         Spinner spinner = (Spinner)findViewById(R.id.report_animalType);
         SpinnerAdapter adapter = new AnimalAdapter(ReportActivity.this);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).equals("Dog")) {
-                    type = Type.Dog;
-                } else if (parent.getItemAtPosition(position).equals("Cat")) {
-                    type = Type.Cat;
-                } else {
-                    type = Type.Other;
-                }
-            }
+        spinnerListener = new AnimalSpinnerOnItemSelectListener(ReportActivity.this);
+        spinner.setOnItemSelectedListener(spinnerListener);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Context context = getApplicationContext();
-                CharSequence text = "Please choose an animal type";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-        });
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
@@ -196,7 +179,7 @@ public class ReportActivity extends ActionBarActivity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-        } else if(type == null) {
+        } else if(spinnerListener.getType() == null) {
             Context context = getApplicationContext();
             CharSequence text = "Please choose an animal type";
             int duration = Toast.LENGTH_SHORT;
@@ -214,7 +197,7 @@ public class ReportActivity extends ActionBarActivity {
                 imageToUpload = image;
             }
 
-            Report report = new Report(fieldDescription.getText().toString(), Type.Dog, Util.bitmapToString(imageToUpload), lastKnownLocation);
+            Report report = new Report(fieldDescription.getText().toString(), spinnerListener.getType(), Util.bitmapToString(imageToUpload), lastKnownLocation);
 
             referenceReports.push().setValue(report);
 

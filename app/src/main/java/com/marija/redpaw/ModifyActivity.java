@@ -17,6 +17,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 
 /**
  * Created by demouser on 8/6/15.
@@ -24,44 +26,27 @@ import android.widget.Toast;
 public class ModifyActivity extends ActionBarActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap image;
-    private Type type;
+    private AnimalSpinnerOnItemSelectListener listener;
+    private int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
+
         Spinner spinner = (Spinner)findViewById(R.id.modify_animalType);
         SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).equals("Dog")) {
-                    type = Type.Dog;
-                } else if (parent.getItemAtPosition(position).equals("Cat")) {
-                    type = Type.Cat;
-                } else {
-                    type = Type.Other;
-                }
-            }
+        listener = new AnimalSpinnerOnItemSelectListener(ModifyActivity.this);
+        spinner.setOnItemSelectedListener(listener);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Context context = getApplicationContext();
-                CharSequence text = "Please choose an animal type";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-        });
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.modify_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
 
-        Bundle bundle = getIntent().getExtras();
-        Animal animal = (Animal)bundle.getSerializable("animal");
-        int id = (int)bundle.getInt("id");
+        Animal animal = (Animal)getIntent().getSerializableExtra("animal");
+
 
         // If we are editing an animal
         if(animal.getImg() != null || animal.getImg().equals("")){
@@ -134,8 +119,9 @@ public class ModifyActivity extends ActionBarActivity {
     public void onClickBtnSave(View view) {
         TextView description = (TextView)findViewById(R.id.modify_fieldDescription);
 
-        //Animal animal = new Animal(description.getText(), )
-
-
+        Animal animal = new Animal(description.getText().toString(), listener.getType(), Util.bitmapToString(image));
+        Intent intent = new Intent(ModifyActivity.this, AnimalsActivity.class);
+        intent.putExtra("animal", animal);
+        startActivity(intent);
     }
 }
