@@ -3,6 +3,7 @@
     package="com.marija.redpaw" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
