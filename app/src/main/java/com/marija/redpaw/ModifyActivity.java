@@ -1,6 +1,7 @@
 package com.marija.redpaw;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,9 +10,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.Serializable;
 
 
 /**
@@ -20,19 +26,27 @@ import android.widget.TextView;
 public class ModifyActivity extends ActionBarActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap image;
+    private AnimalSpinnerOnItemSelectListener listener;
+    private int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
 
+        Spinner spinner = (Spinner)findViewById(R.id.modify_animalType);
+        SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this);
+        spinner.setAdapter(adapter);
+        listener = new AnimalSpinnerOnItemSelectListener(ModifyActivity.this);
+        spinner.setOnItemSelectedListener(listener);
+
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.modify_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
 
-        Bundle bundle = getIntent().getExtras();
-        Animal animal = (Animal)bundle.getSerializable("animal");
-        int id = (int)bundle.getInt("id");
+        Animal animal = (Animal)getIntent().getSerializableExtra("animal");
+
 
         // If we are editing an animal
         if(animal.getImg() != null || animal.getImg().equals("")){
@@ -42,7 +56,6 @@ public class ModifyActivity extends ActionBarActivity {
             TextView description = (TextView)findViewById(R.id.modify_fieldDescription);
             description.setText(animal.getDescription());
 
-            Spinner spinner = (Spinner)findViewById(R.id.modify_animalType);
             int position;
             switch (animal.getType()) {
                 case Cat: position = 0;
@@ -106,8 +119,9 @@ public class ModifyActivity extends ActionBarActivity {
     public void onClickBtnSave(View view) {
         TextView description = (TextView)findViewById(R.id.modify_fieldDescription);
 
-        //Animal animal = new Animal(description.getText(), )
-
-
+        Animal animal = new Animal(description.getText().toString(), listener.getType(), Util.bitmapToString(image));
+        Intent intent = new Intent(ModifyActivity.this, AnimalsActivity.class);
+        intent.putExtra("animal", animal);
+        startActivity(intent);
     }
 }
