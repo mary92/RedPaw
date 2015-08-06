@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="Take photo"
         android:onClick="onClickBtnUploadPhoto"/>
-m
+
     <ImageView
         android:id="@+id/report_imgViewPhoto"
         android:layout_width="128dp"
