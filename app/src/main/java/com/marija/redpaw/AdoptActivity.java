@@ -113,14 +113,14 @@ public class AdoptActivity extends ActionBarActivity {
             if(convertView!=null ){
                 view=convertView;
                 viewHolder=(ViewHolder)view.getTag();
-            }else {
+            } else {
                 LayoutInflater inf=LayoutInflater.from(AdoptActivity.this);
                 view= inf.inflate(R.layout.list_item, null);
                 // Create links to view objects.
                 viewHolder=new ViewHolder();
-                viewHolder.img=(ImageView)findViewById(R.id.adoptitem_imgViewPhoto);
-                viewHolder.description=(TextView)findViewById(R.id.adoptitem_description);
-                viewHolder.shelter=(TextView)findViewById(R.id.adoptitem_shelter);
+                viewHolder.img=(ImageView)view.findViewById(R.id.adoptitem_imgViewPhoto);
+                viewHolder.description=(TextView)view.findViewById(R.id.adoptitem_description);
+                viewHolder.shelter=(TextView)view.findViewById(R.id.adoptitem_shelter);
                 view.setTag(viewHolder);
             }
             // Set values in images.
