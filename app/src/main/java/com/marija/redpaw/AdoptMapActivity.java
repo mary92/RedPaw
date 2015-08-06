@@ -13,6 +13,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,25 +24,34 @@ import java.util.ArrayList;
 public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCallback {
     private ArrayList<Shelter> shelters;
     private Firebase referenceShelters;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adoptmap);
 
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+      //  shelters = new ArrayList<Shelter>();
         // Get refernecse to shelters database
         Firebase.setAndroidContext(this);
-        referenceShelters=new Firebase(getString(R.string.database_shelters));
-
-
+        referenceShelters = new Firebase(getString(R.string.database_shelters));
         referenceShelters.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                shelters = new ArrayList<Shelter>();
                 Shelter currentShelter;
                 ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     currentShelter = dataSnapshot1.getValue(Shelter.class);
-                        shelters.add(currentShelter);
+                    shelters.add(currentShelter);
+                }
+                
+                if (mMap != null){
+                    updateMarkers(mMap,shelters);
                 }
             }
 
@@ -77,20 +87,29 @@ public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCal
         return super.onOptionsItemSelected(item);
     }
 
-    public void onListButtonClicked(View view){
+    public void onListButtonClicked(View view) {
         super.onBackPressed();
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
-        LatLng sydney = new LatLng(-33.867, 151.206);
+        mMap = map;
+        if (shelters != null){
+            updateMarkers(map,shelters);
+        }
+    }
+    private void updateMarkers(GoogleMap map,ArrayList<Shelter> shelters){
 
-        map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+        for (Shelter shelter:shelters) {
+            LatLng markerLatLng = new LatLng(shelter.getLatitude(), shelter.getLongitude());
 
-        map.addMarker(new MarkerOptions()
-                .title("Sydney")
-                .snippet("The most populous city in Australia.")
-                .position(sydney));
+            map.setMyLocationEnabled(true);
+           // map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng, 13));
+
+            map.addMarker(new MarkerOptions()
+                    .title("Sydney")
+                    .snippet("The most populous city in Australia.")
+                    .position(markerLatLng));
+        }
     }
 }

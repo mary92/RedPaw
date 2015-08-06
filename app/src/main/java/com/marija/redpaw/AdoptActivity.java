@@ -32,7 +32,7 @@ public class AdoptActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        animalsInShelter=new ArrayList<Pair>();
+        animalsInShelter = new ArrayList<Pair>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adopt);
         // Get refernecse to shelters database
@@ -69,7 +69,7 @@ public class AdoptActivity extends ActionBarActivity {
         return true;
     }
 
-    public void onClickBtnMap(View view){
+    public void onMapButtonClicked(View view){
         Intent intent = new Intent(AdoptActivity.this, AdoptMapActivity.class);
         startActivity(intent);
     }
