@@ -11,15 +11,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import 	android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -36,6 +42,7 @@ public class ReportActivity extends ActionBarActivity {
     private LocationListener locationListener;
     private Bitmap image;
     private Firebase referenceReports;
+    private Type type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,31 @@ public class ReportActivity extends ActionBarActivity {
         // Get reference to reports database
         Firebase.setAndroidContext(this);
         referenceReports=new Firebase(getString(R.string.database_reports));
+        Spinner spinner = (Spinner)findViewById(R.id.report_animalType);
+        SpinnerAdapter adapter = new AnimalAdapter();
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position).equals("Dog")) {
+                    type = Type.Dog;
+                } else if (parent.getItemAtPosition(position).equals("Cat")) {
+                    type = Type.Cat;
+                } else {
+                    type = Type.Other;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Context context = getApplicationContext();
+                CharSequence text = "Please choose an animal type";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
@@ -54,6 +86,39 @@ public class ReportActivity extends ActionBarActivity {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
         actionToolbar.setTitle("   Red paw");
+    }
+
+    private class AnimalAdapter extends BaseAdapter implements SpinnerAdapter{
+        String[] animals = {"Cat", "Dog", "Other"};
+
+        @Override
+        public int getCount() {
+            return animals.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return animals[position%animals.length];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view;
+
+            if(convertView == null) {
+                view = new TextView(ReportActivity.this);
+            } else {
+                view = (TextView)convertView;
+            }
+
+            view.setText(animals[position]);
+            return view;
+        }
     }
 
     public void onClickBtnLocate (View view) {
@@ -136,6 +201,13 @@ public class ReportActivity extends ActionBarActivity {
         } else if(image == null && fieldDescription.getText().equals("A brief description")) {
             Context context = getApplicationContext();
             CharSequence text = "Please provide a picture or a description";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        } else if(type == null) {
+            Context context = getApplicationContext();
+            CharSequence text = "Please choose an animal type";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
