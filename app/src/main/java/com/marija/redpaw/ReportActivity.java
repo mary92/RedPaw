@@ -53,7 +53,7 @@ public class ReportActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         referenceReports=new Firebase(getString(R.string.database_reports));
         Spinner spinner = (Spinner)findViewById(R.id.report_animalType);
-        SpinnerAdapter adapter = new AnimalAdapter();
+        SpinnerAdapter adapter = new AnimalAdapter(ReportActivity.this);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -223,39 +223,6 @@ public class ReportActivity extends ActionBarActivity {
 
             Intent intent = new Intent(ReportActivity.this, MainActivity.class);
             startActivity(intent);
-        }
-    }
-
-    private class AnimalAdapter extends BaseAdapter implements SpinnerAdapter{
-        String[] animals = {"Cat", "Dog", "Other"};
-
-        @Override
-        public int getCount() {
-            return animals.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return animals[position%animals.length];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView view;
-
-            if(convertView == null) {
-                view = (TextView)LayoutInflater.from(ReportActivity.this).inflate(android.R.layout.simple_spinner_dropdown_item,null);
-            } else {
-                view = (TextView)convertView;
-            }
-
-            view.setText(animals[position]);
-            return view;
         }
     }
 }
