@@ -1,5 +1,6 @@
 package com.marija.redpaw;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -68,10 +69,9 @@ public class AdoptActivity extends ActionBarActivity {
         return true;
     }
 
-    public void onClickBtnSrch(View view){}
-
     public void onClickBtnMap(View view){
-
+        Intent intent = new Intent(AdoptActivity.this, AdoptMapActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -159,18 +159,7 @@ public class AdoptActivity extends ActionBarActivity {
         }
     }
 
-    /*
-    Needed to keep track of each animal's shelter.
-     */
-    public class Pair{
-        public Animal animal;
-        public Shelter shelter;
 
-        public Pair(Animal animal, Shelter shelter){
-            this.animal=animal;
-            this.shelter=shelter;
-        }
-    }
 
     /*
     Needed to show text for each animal.
