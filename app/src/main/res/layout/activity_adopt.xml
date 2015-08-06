@@ -11,17 +11,35 @@
 
     <EditText
         android:id="@+id/adopt_fieldSearch"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/adopt_btnSearch"
         android:background="#ffffff"
-        android:text=" "/>
+        android:layout_margin="8dp"
+        android:padding="5dp"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/adopt_btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Search"/>
+
+    <ListView
+        android:id="@+id/adopt_listViewResults"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/adopt_fieldSearch">
+    </ListView>
 
     <Button
         android:id="@+id/adopt_btnMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/adopt_fieldSearch"
-        android:text="Map"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="View Map"/>
 
 
 </RelativeLayout>
