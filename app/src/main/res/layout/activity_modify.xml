@@ -1,0 +1,87 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ModifyActivity">
+
+    <include
+        android:id="@+id/modify_toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/modify_linearV"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="100"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/modify_toolbar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/modify_linearH"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="100"
+            android:layout_weight="40"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/modify_imgViewPhoto"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="50"
+                android:layout_gravity="top"
+                android:src="@drawable/placeholder"/>
+
+            <Button
+                android:id="@+id/modify_btnUploadPhoto"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="Upload Photo"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="40"
+                android:layout_gravity="center_vertical"
+                android:layout_below="@id/report_imgViewPhoto"
+                android:layout_alignLeft="@id/report_imgViewPhoto"
+                android:layout_alignRight="@id/report_imgViewPhoto"
+                android:onClick="onClickBtnUploadPhoto"/>
+
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/modify_animalType"
+            android:prompt="@string/type_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <EditText
+            android:id="@+id/modify_fieldDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:background="#ffffff"
+            android:padding="8dp"
+            android:gravity="top"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/report_animalType"
+            android:layout_alignLeft="@+id/report_fieldLocation"
+            android:layout_alignRight="@+id/report_btnLocate"
+            android:hint="A brief description"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/modify_btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickBtnSave"/>
+
+
+</RelativeLayout>

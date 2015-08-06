@@ -22,14 +22,13 @@ public class MainActivity extends ActionBarActivity {
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
-        actionToolbar.setTitle("Naslov");
     }
 
     @Override
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
-        actionToolbar.setTitle("      Red paw");
+        actionToolbar.setTitle("   Red Paw");
     }
 
     public void onClickBtnFound(View view){
@@ -58,7 +57,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_settings) {
-            return true;
+            Intent intent = new Intent(MainActivity.this, PickUpActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

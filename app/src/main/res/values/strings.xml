@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">Red Paw</string>
-    <string name="database_shelters">https://brilliant-inferno-9405.firebaseio.com/shelters</string>
     <string name="database_reports">https://brilliant-inferno-9405.firebaseio.com/reports</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="type_prompt">Animal</string>
     <string name="shelter_login">Shelter login</string>
+    <string name="database_shelters">https://brilliant-inferno-9405.firebaseio.com/shelters</string>
 
     <color name="white">#FFFFFF</color>
     <color name="red">#da5959</color>
     <color name="darker_red">#ba3939</color>
     <color name="gray">#F0F0F0</color>
+    <string name="title_activity_adopt_map">AdoptMapActivity</string>
 
 
 </resources>

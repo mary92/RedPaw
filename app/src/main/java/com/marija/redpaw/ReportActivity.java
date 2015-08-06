@@ -14,12 +14,19 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -29,13 +36,14 @@ import java.io.ByteArrayOutputStream;
 /**
  * Created by demouser on 8/6/15.
  */
-public class ReportActivity extends Activity {
+public class ReportActivity extends ActionBarActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private Location lastKnownLocation;
     private  LocationManager locationManager;
     private LocationListener locationListener;
     private Bitmap image;
     private Firebase referenceReports;
+    private Type type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,64 @@ public class ReportActivity extends Activity {
         // Get reference to reports database
         Firebase.setAndroidContext(this);
         referenceReports=new Firebase(getString(R.string.database_reports));
+        Spinner spinner = (Spinner)findViewById(R.id.report_animalType);
+        SpinnerAdapter adapter = new AnimalAdapter();
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position).equals("Dog")) {
+                    type = Type.Dog;
+                } else if (parent.getItemAtPosition(position).equals("Cat")) {
+                    type = Type.Cat;
+                } else {
+                    type = Type.Other;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Context context = getApplicationContext();
+                CharSequence text = "Please choose an animal type";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
+        actionToolbar.setTitle("   Report a Stray");
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onClickBtnLocate (View view) {
@@ -130,6 +196,13 @@ public class ReportActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+        } else if(type == null) {
+            Context context = getApplicationContext();
+            CharSequence text = "Please choose an animal type";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         } else {
             ImageView imgViewPhoto = (ImageView) findViewById(R.id.report_imgViewPhoto);
             EditText fieldLocation = (EditText) findViewById(R.id.report_fieldLocation);
@@ -153,25 +226,36 @@ public class ReportActivity extends Activity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    private class AnimalAdapter extends BaseAdapter implements SpinnerAdapter{
+        String[] animals = {"Cat", "Dog", "Other"};
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_settings) {
-            return true;
+        @Override
+        public int getCount() {
+            return animals.length;
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        public Object getItem(int position) {
+            return animals[position%animals.length];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view;
+
+            if(convertView == null) {
+                view = (TextView)LayoutInflater.from(ReportActivity.this).inflate(android.R.layout.simple_spinner_dropdown_item,null);
+            } else {
+                view = (TextView)convertView;
+            }
+
+            view.setText(animals[position]);
+            return view;
+        }
     }
 }
