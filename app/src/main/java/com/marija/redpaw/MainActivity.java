@@ -3,6 +3,9 @@ package com.marija.redpaw;
 import android.content.Intent;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.IntentSender;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toolbar;
+
+import com.firebase.client.Firebase;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -61,5 +66,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showAnimals(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, AnimalsActivity.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        startActivity(intent);
     }
 }
