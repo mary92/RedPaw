@@ -46,13 +46,14 @@ public class Report {
     }
 
     public Report(){
-        setStatus(Status.REPORTED);
+        status=Status.REPORTED;
+        timestamp=new Date();
     };
 
-    public Report(Animal animal, Location location, Status status, Date timestamp){
+    public Report(Animal animal, Location location){
         this.setAnimal(animal);
         this.setLocation(location);
-        this.setStatus(status);
-        this.setTimestamp(timestamp);
+        status=Status.REPORTED;
+        timestamp=new Date();
     }
 }
