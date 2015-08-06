@@ -56,7 +56,7 @@ public class AdoptActivity extends ActionBarActivity {
 
     public void onClickBtnSrch(View view){}
 
-    public void onClickBtnMap(){
+    public void onClickBtnMap(View view){
 
     }
 
