@@ -2,6 +2,7 @@ package com.marija.redpaw;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 
 /**
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 public class AdoptActivity extends ActionBarActivity {
     private ArrayList<Animal> animalsInShelter;
     private ListView listView;
+    private Firebase referenceShelters;
 
 
     @Override
@@ -29,6 +33,7 @@ public class AdoptActivity extends ActionBarActivity {
         setContentView(R.layout.activity_adopt);
         // Get refernecse to shelters database
         Firebase.setAndroidContext(this);
+        referenceShelters=new Firebase(getString(R.string.database_shelters));
 
         //Add adapter to list view.
         listView=(ListView)findViewById(R.id.adopt_listViewResults);
