@@ -33,8 +33,6 @@
         android:layout_below="@id/report_imgViewPhoto"
         android:layout_alignLeft="@id/report_imgViewPhoto"
         android:layout_alignRight="@id/report_imgViewPhoto"
-        android:text="Take Photo"
-        android:layout_below="@+id/report_fieldLocation"
         android:onClick="onClickBtnUploadPhoto"/>
 
 
@@ -73,7 +71,7 @@
         android:onClick="onClickBtnLocate"/>
 
     <EditText
-        android:id="@id/report_fieldLocation"
+        android:id="@+id/report_fieldLocation"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
