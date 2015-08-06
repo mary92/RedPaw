@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
-        actionToolbar.setTitle("   Red paw");
+        actionToolbar.setTitle("   Red Paw");
     }
 
     public void onClickBtnFound(View view){

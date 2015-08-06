@@ -71,7 +71,7 @@ public class AdoptActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.adopt_toolbar);
-        actionToolbar.setTitle("   Red paw");
+        actionToolbar.setTitle("   Find a New Friend");
     }
 
     @Override

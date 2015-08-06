@@ -86,7 +86,7 @@ public class ReportActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
-        actionToolbar.setTitle("   Red paw");
+        actionToolbar.setTitle("   Report a Stray");
     }
 
 

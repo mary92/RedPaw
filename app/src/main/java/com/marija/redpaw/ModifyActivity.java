@@ -15,6 +15,17 @@ public class ModifyActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.modify_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        actionToolbar.setTitle("   Add/Edit Animal");
     }
 
     @Override
