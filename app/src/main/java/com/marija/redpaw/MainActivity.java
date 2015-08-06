@@ -1,12 +1,16 @@
 package com.marija.redpaw;
 
 import android.content.Intent;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toolbar;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -15,6 +19,17 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+        actionToolbar.setTitle("Naslov");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        actionToolbar.setTitle("      Red paw");
     }
 
     public void onClickBtnFound(View view){
@@ -41,8 +56,8 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatemen
-        if (id == R.id.action_settings) {
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_settings) {
             return true;
         }
 
