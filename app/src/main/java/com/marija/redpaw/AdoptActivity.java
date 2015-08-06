@@ -38,30 +38,13 @@ public class AdoptActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         referenceShelters=new Firebase(getString(R.string.database_shelters));
 
-        //Add adapter to list view.
+        // Add adapter to list view.
         listView=(ListView)findViewById(R.id.adopt_listViewResults);
         MyAdapter listViewAdapter=new MyAdapter();
         listView.setAdapter(listViewAdapter);
 
-        referenceShelters.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Shelter currentShelter;
-                ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
-                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                    currentShelter = dataSnapshot1.getValue(Shelter.class);
-                    for(Animal animal:currentShelter.getAnimals()){
-                        animalsInShelter.add(new Pair(animal,currentShelter));
-                    }
-                }
-                ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
+        // Add database event listener.
+        referenceShelters.addValueEventListener(new DBEventListener());
     }
 
     @Override
@@ -69,6 +52,12 @@ public class AdoptActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void onClickBtnSrch(View view){}
+
+    public void onClickBtnMap(){
+
     }
 
     @Override
@@ -129,6 +118,26 @@ public class AdoptActivity extends ActionBarActivity {
             viewHolder.shelter.setText(currentPair.shelter.getName());
             //viewHolder.shelter.setText();<---- Where do we get the shelter from?
             return view;
+        }
+    }
+
+    public class DBEventListener implements ValueEventListener {
+        @Override
+        public void onDataChange(DataSnapshot snapshot) {
+            Shelter currentShelter;
+            ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
+            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                currentShelter = dataSnapshot1.getValue(Shelter.class);
+                for(Animal animal:currentShelter.getAnimals()){
+                    animalsInShelter.add(new Pair(animal,currentShelter));
+                }
+            }
+            ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+            System.out.println("The read failed: " + firebaseError.getMessage());
         }
     }
 

@@ -25,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Search"/>
+        android:text="Search"
+        android:onClick="onClickBtnSrch"/>
 
     <ListView
         android:id="@+id/adopt_listViewResults"
@@ -41,7 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="View Map"/>
+        android:text="View Map"
+        android:onClick="onClickBtnMap"/>
 
 
 </RelativeLayout>
