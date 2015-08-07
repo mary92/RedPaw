@@ -1,5 +1,7 @@
 package com.marija.redpaw;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.Intent;
 import android.annotation.TargetApi;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -28,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
         Firebase.setAndroidContext(this);
+
     }
 
     @Override
@@ -35,6 +39,11 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
         actionToolbar.setTitle("   Red Paw");
+
+        Animator anim = AnimatorInflater.loadAnimator(this,R.animator.logo_animator);
+        anim.setTarget(findViewById(R.id.main_icon));
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
     }
 
     public void onClickBtnFound(View view){
@@ -76,4 +85,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onClickLogo(View view) {
+        Animator anim = AnimatorInflater.loadAnimator(this,R.animator.logo_animator);
+        anim.setTarget(view);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
+    }
 }

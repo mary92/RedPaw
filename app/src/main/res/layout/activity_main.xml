@@ -23,7 +23,8 @@
             android:layout_weight=".75"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:src="@drawable/highrespaw"/>
+            android:onClick="onClickLogo"
+            android:src="@drawable/highrespaw" />
 
         <Button
             android:id="@+id/main_btnFound"
@@ -35,6 +36,7 @@
             android:layout_weight=".05"
             android:layout_centerHorizontal="true"
             android:onClick="onClickBtnFound"
+            android:outlineProvider="background"
             android:text="I Found a Stray"
             android:layout_below="@id/main_iconlayout"/>
 
@@ -49,7 +51,7 @@
             android:layout_centerHorizontal="true"
             android:onClick="onClickBtnAdopt"
             android:text="I want to adopt"
-            android:layout_below="@id/main_btnFound"/>
+            android:layout_below="@id/main_btnFound" />
 
     </LinearLayout>
 
