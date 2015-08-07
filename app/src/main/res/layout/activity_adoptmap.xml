@@ -10,11 +10,15 @@
 
     <Button
         android:id="@+id/adoptmap_btnList"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="View List"
+        android:padding="20dp"
+        android:textSize="24sp"
+        android:textColor="#F0F0F0"
+        android:background="#da5959"
         android:onClick="onListButtonClicked" />
 
 
