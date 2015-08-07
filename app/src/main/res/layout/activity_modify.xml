@@ -71,7 +71,7 @@
             android:layout_below="@id/modify_animalType"
             android:layout_alignStart="@+id/modify_fieldLocation"
             android:layout_alignEnd="@+id/modify_btnLocate"
-            android:hint="A brief description"
+            android:hint="A brief description of the animal"
             android:text=""/>
 
         <Button
