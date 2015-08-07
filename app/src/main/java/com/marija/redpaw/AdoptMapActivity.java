@@ -11,45 +11,55 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
 
-public class AdoptMapActivity extends ActionBarActivity {
+public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCallback {
+    private ArrayList<Shelter> shelters;
+    private Firebase referenceShelters;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adoptmap);
 
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+      //  shelters = new ArrayList<Shelter>();
         // Get refernecse to shelters database
-        /*Firebase.setAndroidContext(this);
-        referenceShelters=new Firebase(getString(R.string.database_shelters));
-
-        //Add adapter to list view.
-        listView=(ListView)findViewById(R.id.adopt_listViewResults);
-        MyAdapter listViewAdapter=new MyAdapter();
-        listView.setAdapter(listViewAdapter);
-
+        Firebase.setAndroidContext(this);
+        referenceShelters = new Firebase(getString(R.string.database_shelters));
         referenceShelters.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                shelters = new ArrayList<Shelter>();
                 Shelter currentShelter;
                 ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     currentShelter = dataSnapshot1.getValue(Shelter.class);
-                    for(Animal animal:currentShelter.getAnimals()){
-                        animalsInShelter.add(new Pair(animal,currentShelter));
-                    }
+                    shelters.add(currentShelter);
                 }
-                ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
+                
+                if (mMap != null){
+                    updateMarkers(mMap,shelters);
+                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-        });*/
+        });
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.adoptmap_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
@@ -77,7 +87,29 @@ public class AdoptMapActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onListButtonClicked(View view){
+    public void onListButtonClicked(View view) {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+        if (shelters != null){
+            updateMarkers(map,shelters);
+        }
+    }
+    private void updateMarkers(GoogleMap map,ArrayList<Shelter> shelters){
+
+        for (Shelter shelter:shelters) {
+            LatLng markerLatLng = new LatLng(shelter.getLatitude(), shelter.getLongitude());
+
+            map.setMyLocationEnabled(true);
+           // map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng, 13));
+
+            map.addMarker(new MarkerOptions()
+                    .title("Sydney")
+                    .snippet("The most populous city in Australia.")
+                    .position(markerLatLng));
+        }
     }
 }

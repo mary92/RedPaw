@@ -12,7 +12,8 @@ import java.util.Date;
  */
 public class Report {
     private Animal animal;
-    private Location location;
+    private double latitude;
+    private double longitude;
     private Status status;
     private Date timestamp;
 
@@ -22,14 +23,6 @@ public class Report {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public Status getStatus() {
@@ -55,15 +48,33 @@ public class Report {
 
     public Report(Animal animal, Location location){
         this.setAnimal(animal);
-        this.setLocation(location);
+        this.setLatitude(location.getLatitude());
+        this.setLongitude(location.getLongitude());
         status=Status.REPORTED;
         timestamp=new Date();
     }
 
     public Report(String description, Type type, String img, Location location) {
         animal = new Animal(description, type, img);
-        this.setLocation(location);
+        this.setLatitude(location.getLatitude());
+        this.setLongitude(location.getLongitude());
         status=Status.REPORTED;
         timestamp=new Date();
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
