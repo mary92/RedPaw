@@ -23,7 +23,7 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_add_circle_black_24dp"
+        android:background="@drawable/ic_add_circle_outline_black_48dp"
         android:onClick="addAnimal"
         />
 </RelativeLayout>
