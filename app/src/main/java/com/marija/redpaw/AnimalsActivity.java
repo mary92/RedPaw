@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.widget.AdapterViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +39,8 @@ public class AnimalsActivity extends ActionBarActivity {
     private ListView listView;
     private MyAnimalAdapter listAdapter;
     private Firebase sheltersDB;
+    private Toolbar actionToolbar;
+    Button notificationsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +57,33 @@ public class AnimalsActivity extends ActionBarActivity {
         sheltersDB = new Firebase(getString(R.string.database_shelters));
         addDBListener();
 
-        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
+        actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
+        addNotifications();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
         actionToolbar.setTitle("   All Animals");
+    }
+
+    private void addNotifications() {
+        if (notificationsBtn == null) {
+            notificationsBtn = new Button(getApplicationContext());
+            notificationsBtn.setText("3");
+
+            actionToolbar.addView(notificationsBtn);
+
+            notificationsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(AnimalsActivity.this, PickUpActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
     private void addDBListener() {
