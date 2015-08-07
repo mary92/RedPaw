@@ -50,6 +50,8 @@ public class AddShelterActivity extends ActionBarActivity {
         shelter.setName(((EditText) findViewById(R.id.add_shelter_name)).getText().toString());
         shelter.setPhonenumber(((EditText) findViewById(R.id.add_shelter_phone)).getText().toString());
         shelter.setAddress(((EditText) findViewById(R.id.add_shelter_address)).getText().toString());
+        shelter.setLongitude(Float.parseFloat(((EditText) findViewById(R.id.add_shelter_long)).getText().toString()));
+        shelter.setLatitude(Float.parseFloat(((EditText) findViewById(R.id.add_shelter_lat)).getText().toString()));
 
         Firebase.setAndroidContext(this);
         Firebase referenceShelters=new Firebase(getString(R.string.database_shelters));
