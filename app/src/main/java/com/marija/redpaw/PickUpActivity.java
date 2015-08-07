@@ -71,8 +71,10 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
 
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     currentReport = dataSnapshot1.getValue(Report.class);
-                    reports.add(currentReport);
-                    Log.d("izvestaj",currentReport.getTimestamp().toString());
+                    if (currentReport.getStatus() == Status.REPORTED) {
+                        reports.add(currentReport);
+                        Log.d("izvestaj", currentReport.getTimestamp().toString());
+                    }
                 }
                 if (mMap != null) {
                     updateMarkers(mMap, reports);
@@ -148,8 +150,8 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     private void updateMarkers(GoogleMap map, ArrayList<Report> reports) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         map.setMyLocationEnabled(true);
+        map.clear();
         mMapMarkerIdReportPostion = new HashMap<Marker, Report>();
-
         for (Report report : reports) {
             LatLng markerLatLng = new LatLng(report.getLatitude(), report.getLongitude());
             builder.include(markerLatLng);
@@ -162,6 +164,7 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                 marker0 = marker;
             }
         }
+        if (reports.isEmpty()) return;
         LatLngBounds bounds = builder.build();
         int padding = 0; // offset from edges of the map in pixels
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
@@ -174,14 +177,18 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     }
 
     public void onPickUpClicked(View view){
-        if (marker0 != null) {
+        if (report0 != null) {
             //Animal animal = report0.getAnimal();
             report0.setStatus(Status.PICKED_UP);
             referenceReports.child(report0.getTimestamp().toString()).setValue(report0);
 
+            /*mMapMarkerIdReportPostion.remove(marker0);
+            reports.remove(report0);
             marker0.remove();
+            */
             marker0 = null;
             report0 = null;
+
         }
     }
 }
