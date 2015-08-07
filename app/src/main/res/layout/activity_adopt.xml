@@ -9,17 +9,14 @@
         android:id="@+id/adopt_toolbar"
         layout="@layout/toolbar"/>
 
-    <EditText
-        android:id="@+id/adopt_fieldSearch"
+    <Spinner
+        android:id="@+id/adopt_animalType"
+        android:prompt="@string/type_prompt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/adopt_toolbar"
-        android:layout_toLeftOf="@+id/adopt_btnSearch"
-        android:background="#ffffff"
-        android:layout_margin="8dp"
-        android:padding="5dp"
-        android:hint="Search term"
-        android:text=""/>
+        android:layout_toLeftOf="@+id/adopt_btnSearch">
+    </Spinner>
 
     <Button
         android:id="@+id/adopt_btnSearch"
@@ -34,7 +31,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_below="@id/adopt_fieldSearch"
+        android:layout_below="@id/adopt_animalType"
         android:layout_above="@+id/adopt_btnList">
     </ListView>
 

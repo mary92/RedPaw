@@ -3,17 +3,17 @@ package com.marija.redpaw;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -28,11 +28,12 @@ public class AdoptActivity extends ActionBarActivity {
     private ArrayList<Pair> animalsInShelter;
     private ListView listView;
     private Firebase referenceShelters;
+    private Type animalType;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        animalsInShelter = new ArrayList<Pair>();
+        animalsInShelter=new ArrayList<Pair>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adopt);
         // Get refernecse to shelters database
@@ -43,6 +44,12 @@ public class AdoptActivity extends ActionBarActivity {
         listView=(ListView)findViewById(R.id.adopt_listViewResults);
         MyAdapter listViewAdapter=new MyAdapter();
         listView.setAdapter(listViewAdapter);
+
+        // Add adapter, and action listener for type spinner.
+        Spinner spinner = (Spinner)findViewById(R.id.adopt_animalType);
+        spinner.setAdapter(new AnimalAdapter(this));
+        spinner.setOnItemSelectedListener(new AnimalSpinnerListener());
+
 
         // Add database event listener
         referenceShelters.addValueEventListener(new DBEventListener());
@@ -139,6 +146,7 @@ public class AdoptActivity extends ActionBarActivity {
     public class DBEventListener implements ValueEventListener {
         @Override
         public void onDataChange(DataSnapshot snapshot) {
+            animalsInShelter.clear();
             Shelter currentShelter;
             ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
             // Go through all of the shelters.
@@ -146,7 +154,11 @@ public class AdoptActivity extends ActionBarActivity {
                 currentShelter = dataSnapshot1.getValue(Shelter.class);
                 // Go through all of the animals in this shelter.
                 for(Animal animal:currentShelter.getAnimals()){
-                    animalsInShelter.add(new Pair(animal,currentShelter));
+                    if(animalType!=null){
+                        animalsInShelter.add(new Pair(animal,currentShelter));
+                    }else if(animalType==animal.getType()){
+                        animalsInShelter.add(new Pair(animal,currentShelter));
+                    }
                 }
             }
             // Force the view to update.
@@ -159,6 +171,39 @@ public class AdoptActivity extends ActionBarActivity {
         }
     }
 
+    /*
+    Needed to keep track of each animal's shelter.
+     */
+    public class Pair{
+        public Animal animal;
+        public Shelter shelter;
+
+        public Pair(Animal animal, Shelter shelter){
+            this.animal=animal;
+            this.shelter=shelter;
+        }
+    }
+
+    public class AnimalSpinnerListener implements AdapterView.OnItemSelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (parent.getItemAtPosition(position).equals("Dog")) {
+                animalType=Type.Dog;
+            } else if (parent.getItemAtPosition(position).equals("Cat")) {
+                animalType=Type.Cat;
+            } else {
+                animalType=Type.Other;
+            }
+            referenceShelters.addValueEventListener(new DBEventListener());
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+               animalType=null; // Show all types.
+        }
+
+    }
 
 
     /*

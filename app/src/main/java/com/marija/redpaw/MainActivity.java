@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toolbar;
 
+import com.firebase.client.Firebase;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
+        Firebase.setAndroidContext(this);
     }
 
     @Override
@@ -61,6 +64,9 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
         } else if (id == R.id.menu_shelter_login) {
             Intent i = new Intent(MainActivity.this, AnimalsActivity.class);
+            startActivity(i);
+        }else if(id==R.id.menu_add_shelter){
+            Intent i = new Intent(MainActivity.this, AddShelterActivity.class);
             startActivity(i);
         }
 
