@@ -59,7 +59,7 @@ public class AnimalsActivity extends ActionBarActivity {
         sheltersDB = new Firebase(getString(R.string.database_shelters));
         reportsDB = new Firebase(getString(R.string.database_reports));
 
-        account = new Account(sheltersDB.getAuth().getUid(), "8268");
+        account = new Account(sheltersDB.getAuth().getUid(), "5428");
         addDBListeners();
 
         actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);

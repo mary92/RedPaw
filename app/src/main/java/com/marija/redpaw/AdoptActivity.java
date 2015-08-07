@@ -126,7 +126,7 @@ public class AdoptActivity extends ActionBarActivity {
             }
             displayedAnimals.clear();                
             for (Pair animal : animalsInShelter) {
-                if (animal!=null&&(shelter.getName().equals("All")||animal.shelter.getName().equals(shelter.getName()))){
+                if (animal!=null&&animal.animal!=null&&(shelter.getName().equals("All")||animal.shelter.getName().equals(shelter.getName()))){
                     if (type == Type.All || animal.animal.getType().equals(type)) {
                         displayedAnimals.add(animal);
                     }
