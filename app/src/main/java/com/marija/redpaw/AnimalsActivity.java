@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -19,6 +20,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +41,11 @@ public class AnimalsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animals);
 
-        listView = (ListView)findViewById(R.id.animalsInMyShelter);
+        listView = (ListView)findViewById(R.id.animals_animalsInMyShelter);
         MyAnimalAdapter listViewAdapter= new MyAnimalAdapter();
         listView.setAdapter(listViewAdapter);
 
-        account = new Account("worker", "savethepets", "90b88b9d-af39-4c3a-ae9e-04b632209ae6");
+        account = new Account("worker", "savethepets", "c154c57a-4b53-4b76-85e5-a2be9c3b111e");
 
         Firebase.setAndroidContext(this);
         sheltersDB = new Firebase(getString(R.string.database_shelters));
@@ -114,6 +116,25 @@ public class AnimalsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void editAnimal(View view) {
+        Intent i = new Intent(AnimalsActivity.this, ModifyActivity.class);
+        RelativeLayout v = (RelativeLayout) view.getParent();
+        AnimalCardHolder holder = (AnimalCardHolder) v.getTag();
+        i.putExtra("position", holder.position);
+        i.putExtra("shelterId", account.getShelterId());
+        i.putExtra("animal", (Animal) listAdapter.getItem(holder.position));
+        Log.d("lavina", holder.position + "");
+        startActivity(i);
+    }
+
+    public void addAnimal(View view) {
+        Intent i = new Intent(AnimalsActivity.this, ModifyActivity.class);
+        i.putExtra("position", listAdapter.getCount());
+        i.putExtra("shelterId", account.getShelterId());
+        i.putExtra("animal", new Animal());
+        startActivity(i);
+    }
+
     public class MyAnimalAdapter extends BaseAdapter {
 
         @Override
@@ -154,6 +175,7 @@ public class AnimalsActivity extends ActionBarActivity {
 
             viewHolder.animalPic.setImageBitmap(Util.stringToBitmap(currentAnimal.getImg()));
             viewHolder.animalDescription.setText(currentAnimal.getDescription());
+            viewHolder.position = position;
 
             return view;
         }
