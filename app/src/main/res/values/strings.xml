@@ -15,6 +15,7 @@
     <string name="title_activity_add_shelter">AddShelterActivity</string>
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="failed_login">Failed to login in!</string>
+    <string name="shelter_logout">Logout</string>
 
 
 </resources>
