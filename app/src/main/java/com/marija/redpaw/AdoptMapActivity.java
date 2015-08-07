@@ -108,8 +108,8 @@ public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCal
            // map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng, 13));
 
             map.addMarker(new MarkerOptions()
-                    .title("Sydney")
-                    .snippet("The most populous city in Australia.")
+                    .title(shelter.getName())
+                    .snippet(shelter.getAddress() + "\n" + shelter.getPhonenumber())
                     .position(markerLatLng));
         }
         LatLngBounds bounds = builder.build();
