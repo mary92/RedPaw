@@ -30,6 +30,7 @@ public class AdoptActivity extends ActionBarActivity {
     private ListView listView;
     private Firebase referenceShelters;
     private Type animalType;
+    //private ArrayList<String> shelters;
 
 
     @Override
@@ -103,13 +104,12 @@ public class AdoptActivity extends ActionBarActivity {
 
         public void filterByType(Type type) {
             displayedAnimals.clear();
-            if(type!=null) {
                 for (Pair animal : animalsInShelter) {
-                    if (animal.animal.getType().equals(type)) {
+                    if (type==Type.All||animal.animal.getType().equals(type)) {
                         displayedAnimals.add(animal);
                     }
                 }
-            }
+
         }
 
         @Override
@@ -168,11 +168,8 @@ public class AdoptActivity extends ActionBarActivity {
                 currentShelter = dataSnapshot1.getValue(Shelter.class);
                 // Go through all of the animals in this shelter.
                 for(Animal animal:currentShelter.getAnimals()){
-                    if(animalType!=null){
                         animalsInShelter.add(new Pair(animal,currentShelter));
-                    }else if(animalType==animal.getType()){
-                        animalsInShelter.add(new Pair(animal,currentShelter));
-                    }
+                        //shelters.add(currentShelter.getName());
                 }
             }
             // Force the view to update.
@@ -212,7 +209,7 @@ public class AdoptActivity extends ActionBarActivity {
             } else if (parent.getItemAtPosition(position).equals("Other")) {
                 animalType=Type.Other;
             }else{
-                animalType=null;
+                animalType=Type.All;
             }
             //referenceShelters.removeValueEventListener();
             MyAdapter adapter = ((MyAdapter) listView.getAdapter());

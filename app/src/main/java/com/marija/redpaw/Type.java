@@ -6,5 +6,6 @@ package com.marija.redpaw;
 public enum Type {
     Cat,
     Dog,
-    Other
+    Other,
+    All
 }
