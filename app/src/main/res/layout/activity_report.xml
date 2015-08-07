@@ -48,13 +48,26 @@
 
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/report_animalType"
-            android:prompt="@string/type_prompt"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-        </Spinner>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type of animal:"
+                android:id="@+id/report_typeTxt"/>
+
+            <Spinner
+                android:id="@+id/report_animalType"
+                android:prompt="@string/type_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+            </Spinner>
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/report_fieldDescription"

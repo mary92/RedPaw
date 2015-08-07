@@ -41,6 +41,8 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:textSize="20dp"
+        android:textColor="#F0F0F0"
+        android:background="#da5959"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/password_box"
         android:layout_marginTop="20dp"
