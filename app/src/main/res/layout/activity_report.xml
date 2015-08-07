@@ -28,6 +28,8 @@
                 android:id="@+id/report_imgViewPhoto"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:layout_weight="30"
                 android:layout_gravity="top"
                 android:src="@drawable/placeholder"/>
@@ -55,6 +57,8 @@
 
         <EditText
             android:id="@+id/report_fieldDescription"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="20"
@@ -83,7 +87,7 @@
                 android:id="@+id/report_btnReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Report"
+                android:text="Submit"
                 android:layout_alignParentRight="true"
                 android:onClick="onClickBtnReport"/>
 
