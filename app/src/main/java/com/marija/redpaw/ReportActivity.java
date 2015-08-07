@@ -14,11 +14,13 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -63,6 +65,18 @@ public class ReportActivity extends ActionBarActivity {
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.report_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
+
+        EditText et = (EditText)findViewById(R.id.report_fieldDescription);
+        et.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onClickBtnReport(v);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

@@ -7,10 +7,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -75,6 +78,18 @@ public class ModifyActivity extends ActionBarActivity {
             }
             spinner.setSelection(position);
         }
+
+        EditText et = (EditText)findViewById(R.id.modify_fieldDescription);
+        et.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onClickBtnSave(v);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
