@@ -69,8 +69,6 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                 reports = new ArrayList<Report>();
                 Report currentReport;
                 //ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
-                report0 = null;
-                marker0 =null;
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     currentReport = dataSnapshot1.getValue(Report.class);
                     if (currentReport.getStatus() == Status.REPORTED) {
@@ -182,9 +180,19 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
         if (report0 != null) {
             //Animal animal = report0.getAnimal();
             report0.setStatus(Status.PICKED_UP);
-            referenceReports.child(report0.getTimestamp().toString()).setValue(report0);
-            imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_dog));
-            textView.setText("");
+            Report tmp = new Report();
+            tmp.setAnimal(report0.getAnimal());
+            tmp.setLatitude(report0.getLatitude());
+            tmp.setLongitude(report0.getLongitude());
+            tmp.setStatus(report0.getStatus());
+            tmp.setTimestamp(report0.getTimestamp());
+
+            referenceReports.child(report0.getTimestamp().toString()).setValue(tmp);
+            if (reports.size() == 1) {
+                imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_dog));
+                textView.setText("");
+            }
+            mMap.clear();
             marker0 = null;
             report0 = null;
 
