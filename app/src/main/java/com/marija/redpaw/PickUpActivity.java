@@ -9,11 +9,13 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -103,10 +105,10 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     }
 
     private void updateMarkers(GoogleMap map,ArrayList<Report> reports){
-
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (Report report:reports) {
             LatLng markerLatLng = new LatLng(report.getLatitude(), report.getLongitude());
-
+            builder.include(markerLatLng);
             map.setMyLocationEnabled(true);
             // map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng, 13));
 
@@ -115,5 +117,9 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                     .snippet("The most populous city in Australia.")
                     .position(markerLatLng));
         }
+        LatLngBounds bounds = builder.build();
+        int padding = 0; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        map.moveCamera(cu);
     }
 }
