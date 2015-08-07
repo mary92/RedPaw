@@ -28,6 +28,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.ManagerFactoryParameters;
+
 import static com.marija.redpaw.AdoptActivity.*;
 
 /**
@@ -121,7 +123,7 @@ public class AnimalsActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_sign_in, menu);
         return true;
     }
 
@@ -134,8 +136,14 @@ public class AnimalsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_settings) {
-            return true;
-        }
+            Intent intent = new Intent(AnimalsActivity.this, PickUpActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_shelter_logout) {
+            Firebase ref = sheltersDB.getParent();
+            ref.unauth();
+            Intent i = new Intent(AnimalsActivity.this, MainActivity.class);
+            startActivity(i);
+        };
 
         return super.onOptionsItemSelected(item);
     }

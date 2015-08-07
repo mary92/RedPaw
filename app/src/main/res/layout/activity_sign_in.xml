@@ -9,8 +9,8 @@
         android:layout_height="200dp"
         android:src="@drawable/highrespaw"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="80dp"/>
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:id="@+id/email_box"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:minWidth="200dp"
         android:layout_centerInParent="true"
-        android:text="Email"
+       android:layout_centerHorizontal="true"
         android:textAlignment="center"/>
 
     <EditText
@@ -26,11 +26,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="200dp"
-        android:layout_centerInParent="true"
-        android:text="Password"
+       android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:layout_marginTop="15dp"
-        android:layout_below="@id/email_box"/>
+        android:layout_below="@id/email_box"
+        android:password="true"/>
 
     <Button
         android:id="@+id/login_btn"
@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:textSize="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="150dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/password_box"
+        android:layout_marginTop="20dp"
+        android:onClick="onSignIn"/>
 </RelativeLayout>
