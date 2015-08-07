@@ -30,6 +30,8 @@
                 android:id="@+id/modify_imgViewPhoto"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:layout_weight="30"
                 android:layout_gravity="top"
                 android:src="@drawable/placeholder"/>
@@ -57,10 +59,12 @@
 
         <EditText
             android:id="@+id/modify_fieldDescription"
+            android:singleLine="true"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="20"
             android:background="#ffffff"
+            android:imeOptions="actionDone"
             android:padding="8dp"
             android:gravity="top"
             android:layout_marginTop="15dp"
