@@ -195,6 +195,7 @@ public class AdoptActivity extends ActionBarActivity {
             } else {
                 animalType=Type.Other;
             }
+            //referenceShelters.removeValueEventListener();
             referenceShelters.addValueEventListener(new DBEventListener());
         }
 
