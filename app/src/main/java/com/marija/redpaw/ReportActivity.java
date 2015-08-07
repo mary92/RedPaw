@@ -34,6 +34,8 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by demouser on 8/6/15.
@@ -214,7 +216,10 @@ public class ReportActivity extends ActionBarActivity {
 
             Report report = new Report(fieldDescription.getText().toString(), spinnerListener.getType(), Util.bitmapToString(imageToUpload), lastKnownLocation);
 
-            referenceReports.push().setValue(report);
+            Map<String, Report> map = new HashMap<String, Report>();
+            map.put(report.getTimestamp().toString(), report);
+            referenceReports.child(report.getTimestamp().toString()).setValue(report);
+            //referenceReports.push().setValue(report);
 
             // Tell the location manager that we don't want to know the location anymore
             locationManager.removeUpdates(locationListener);

@@ -17,9 +17,15 @@ public class Report {
     private Status status;
     private Date timestamp;
 
+    /*private static int lastId = 0;
+
+    private int id = lastId++;
+*/
     public Animal getAnimal() {
         return animal;
     }
+
+
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
@@ -77,4 +83,6 @@ public class Report {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+
 }

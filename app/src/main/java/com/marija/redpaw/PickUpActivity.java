@@ -1,5 +1,6 @@
 package com.marija.redpaw;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,6 +43,9 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     private TextView textView;
     private Report report0;
     Marker marker0 = null;
+
+    Bitmap image;
+    AnimalSpinnerOnItemSelectListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +67,12 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
             public void onDataChange(DataSnapshot snapshot) {
                 reports = new ArrayList<Report>();
                 Report currentReport;
-                ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
+                //ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
+
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     currentReport = dataSnapshot1.getValue(Report.class);
                     reports.add(currentReport);
+                    Log.d("izvestaj",currentReport.getTimestamp().toString());
                 }
                 if (mMap != null) {
                     updateMarkers(mMap, reports);
@@ -167,6 +174,14 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     }
 
     public void onPickUpClicked(View view){
+        if (marker0 != null) {
+            //Animal animal = report0.getAnimal();
+            report0.setStatus(Status.PICKED_UP);
+            referenceReports.child(report0.getTimestamp().toString()).setValue(report0);
 
+            marker0.remove();
+            marker0 = null;
+            report0 = null;
+        }
     }
 }
