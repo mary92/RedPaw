@@ -108,11 +108,33 @@ public class AnimalsActivity extends ActionBarActivity {
             }
 
             private void populateAnimalsList(List<Animal> animals) {
-                if(animals != null) {
+                if (animals != null) {
                     for (Animal pet : animals) {
                         animalsInMyShelter.add(pet);
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        reportsDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Report report;
+                int count = 0;
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    report = data.getValue(Report.class);
+                    if (report.getStatus() == Status.REPORTED) {
+                        count++;
+                    }
+                }
+
+                notificationsBtn.setText("" + count);
             }
 
             @Override
