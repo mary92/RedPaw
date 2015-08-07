@@ -1,33 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id = "@+id/animalCard"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:background="#ffffff"
+    android:layout_margin="10dp"
+    android:layout_width="fill_parent"
+    android:layout_height="70dp">
 
     <ImageView
         android:id="@+id/animalPic"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:src="@drawable/default_dog"/>
 
     <TextView
         android:id="@+id/animalDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/animalPic"/>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="20"
+        android:layout_toRightOf="@id/animalPic"
+        android:layout_toLeftOf="@id/card_layout"/>
 
-
-    <Button
-        android:id="@+id/modify_btn"
+    <RelativeLayout
+        android:id="@+id/card_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:textSize="10sp"
-        android:focusableInTouchMode="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"/>
+        android:layout_height="70dp"
+        android:layout_marginEnd="5dp"
+        android:layout_alignParentRight="true">
+
+        <Button
+            android:id="@+id/modify_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:textSize="12sp"
+            android:text="Edit"
+            android:focusableInTouchMode="true"/>
+
+        <Button
+            android:id="@+id/remove_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:textSize="12sp"
+            android:text="Remove"
+            android:focusableInTouchMode="true"
+            android:layout_below="@id/modify_btn"
+            android:layout_alignStart="@id/modify_btn"
+            android:layout_alignEnd="@id/modify_btn"/>
+
+    </RelativeLayout>
+
+
+
 </RelativeLayout>
