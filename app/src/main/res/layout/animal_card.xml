@@ -41,7 +41,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:focusableInTouchMode="true"
             android:onClick="editAnimal"/>
 
         <Button
@@ -49,10 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remove"
-            android:focusableInTouchMode="true"
             android:layout_below="@id/modify_btn"
             android:layout_alignStart="@id/modify_btn"
-            android:layout_alignEnd="@id/modify_btn"/>
+            android:layout_alignEnd="@id/modify_btn"
+            android:onClick="removeAnimal"/>
 
     </RelativeLayout>
 

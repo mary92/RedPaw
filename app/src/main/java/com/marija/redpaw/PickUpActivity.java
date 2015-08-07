@@ -189,5 +189,6 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
             report0 = null;
 
         }
+
     }
 }

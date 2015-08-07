@@ -41,6 +41,7 @@ public class AnimalsActivity extends ActionBarActivity {
     private ListView listView;
     private MyAnimalAdapter listAdapter;
     private Firebase sheltersDB;
+    private Firebase reportsDB;
     private Toolbar actionToolbar;
     Button notificationsBtn;
 
@@ -57,7 +58,8 @@ public class AnimalsActivity extends ActionBarActivity {
 
         Firebase.setAndroidContext(this);
         sheltersDB = new Firebase(getString(R.string.database_shelters));
-        addDBListener();
+        reportsDB = new Firebase(getString(R.string.database_reports));
+        addDBListeners();
 
         actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
         setSupportActionBar(actionToolbar);
@@ -78,7 +80,7 @@ public class AnimalsActivity extends ActionBarActivity {
 
             actionToolbar.addView(notificationsBtn);
 
-            notificationsBtn.setOnClickListener(new View.OnClickListener() {
+            notificationsBtn.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(AnimalsActivity.this, PickUpActivity.class);
@@ -88,7 +90,7 @@ public class AnimalsActivity extends ActionBarActivity {
         }
     }
 
-    private void addDBListener() {
+    private void addDBListeners() {
         sheltersDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -106,11 +108,33 @@ public class AnimalsActivity extends ActionBarActivity {
             }
 
             private void populateAnimalsList(List<Animal> animals) {
-                if(animals != null) {
+                if (animals != null) {
                     for (Animal pet : animals) {
                         animalsInMyShelter.add(pet);
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        reportsDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Report report;
+                int count = 0;
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    report = data.getValue(Report.class);
+                    if (report.getStatus() == Status.REPORTED) {
+                        count++;
+                    }
+                }
+
+                notificationsBtn.setText("" + count);
             }
 
             @Override
@@ -163,6 +187,12 @@ public class AnimalsActivity extends ActionBarActivity {
         i.putExtra("shelterId", account.getShelterId());
         i.putExtra("animal", new Animal());
         startActivity(i);
+    }
+
+    public void removeAnimal(View view) {
+        int position = listView.getPositionForView(view);
+        Log.d("carolina", "removed button pressed " + position);
+        sheltersDB.child("/" + account.getShelterId() + "/animals/" + position).removeValue();
     }
 
     public class MyAnimalAdapter extends BaseAdapter {
