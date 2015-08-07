@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(MainActivity.this, PickUpActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_shelter_login) {
-            Intent i = new Intent(MainActivity.this, AnimalsActivity.class);
+            Intent i = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(i);
         }else if(id==R.id.menu_add_shelter){
             Intent i = new Intent(MainActivity.this, AddShelterActivity.class);

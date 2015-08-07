@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="type_prompt">Animal</string>
-    <string name="shelter_login">Shelter login</string>
+    <string name="shelter_login">Login</string>
     <string name="database_shelters">https://brilliant-inferno-9405.firebaseio.com/shelters</string>
 
     <color name="white">#FFFFFF</color>
@@ -13,6 +13,8 @@
     <color name="gray">#F0F0F0</color>
     <string name="title_activity_adopt_map">AdoptMapActivity</string>
     <string name="title_activity_add_shelter">AddShelterActivity</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="failed_login">Failed to login in!</string>
 
 
 </resources>
