@@ -57,7 +57,8 @@ public class ReportActivity extends ActionBarActivity {
         referenceReports=new Firebase(getString(R.string.database_reports));
 
         Spinner spinner = (Spinner)findViewById(R.id.report_animalType);
-        SpinnerAdapter adapter = new AnimalAdapter(ReportActivity.this);
+        String[] animalTypes = {"Cat", "Dog", "Other"};
+        SpinnerAdapter adapter = new AnimalAdapter(ReportActivity.this, animalTypes);
         spinner.setAdapter(adapter);
         spinnerListener = new AnimalSpinnerOnItemSelectListener(ReportActivity.this);
         spinner.setOnItemSelectedListener(spinnerListener);

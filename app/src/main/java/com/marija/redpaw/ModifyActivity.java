@@ -48,7 +48,8 @@ public class ModifyActivity extends ActionBarActivity {
         sheltersRef=new Firebase(getString(R.string.database_shelters) + "/");
 
         Spinner spinner = (Spinner)findViewById(R.id.modify_animalType);
-        SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this);
+        String [] animalTypes = {"Cat", "Dog", "Other"};
+        SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this, animalTypes);
         spinner.setAdapter(adapter);
         listener = new AnimalSpinnerOnItemSelectListener(ModifyActivity.this);
         spinner.setOnItemSelectedListener(listener);
