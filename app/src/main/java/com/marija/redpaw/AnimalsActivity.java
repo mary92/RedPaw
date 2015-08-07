@@ -84,8 +84,10 @@ public class AnimalsActivity extends ActionBarActivity {
             }
 
             private void populateAnimalsList(List<Animal> animals) {
-                for (Animal pet : animals) {
-                    animalsInMyShelter.add(pet);
+                if(animals != null) {
+                    for (Animal pet : animals) {
+                        animalsInMyShelter.add(pet);
+                    }
                 }
             }
 

@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -33,7 +35,7 @@ public class ModifyActivity extends ActionBarActivity {
     private Bitmap image;
     private AnimalSpinnerOnItemSelectListener listener;
     private int id;
-    private String shelterID;
+    private String shelterId;
     Firebase sheltersRef;
 
 
@@ -46,7 +48,8 @@ public class ModifyActivity extends ActionBarActivity {
         sheltersRef=new Firebase(getString(R.string.database_shelters) + "/");
 
         Spinner spinner = (Spinner)findViewById(R.id.modify_animalType);
-        SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this);
+        String [] animalTypes = {"Cat", "Dog", "Other"};
+        SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this, animalTypes);
         spinner.setAdapter(adapter);
         listener = new AnimalSpinnerOnItemSelectListener(ModifyActivity.this);
         spinner.setOnItemSelectedListener(listener);
@@ -56,13 +59,14 @@ public class ModifyActivity extends ActionBarActivity {
         actionToolbar.setLogo(R.mipmap.ic_launcher);
 
         Animal animal = (Animal)getIntent().getSerializableExtra("animal");
-        shelterID = getIntent().getStringExtra("shelterId");
+        shelterId = getIntent().getStringExtra("shelterId");
         id = getIntent().getIntExtra("position", 0);
 
         // If we are editing an animal
-        if(animal.getImg() != null || animal.getImg().equals("")){
+        if(animal.getImg() != null && !animal.getImg().equals("")){
             ImageView imageView = (ImageView)findViewById(R.id.modify_imgViewPhoto);
-            imageView.setImageBitmap(Util.stringToBitmap(animal.getImg()));
+            image = Util.stringToBitmap(animal.getImg());
+            imageView.setImageBitmap(image);
 
             TextView description = (TextView)findViewById(R.id.modify_fieldDescription);
             description.setText(animal.getDescription());
@@ -78,25 +82,12 @@ public class ModifyActivity extends ActionBarActivity {
             }
             spinner.setSelection(position);
         }
-
-        EditText et = (EditText)findViewById(R.id.modify_fieldDescription);
-        et.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    onClickBtnSave(v);
-                    return true;
-                }
-                return false;
-            }
-        });
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.modify_toolbar);
         actionToolbar.setTitle("   Add/Edit Animal");
     }
 
@@ -134,7 +125,7 @@ public class ModifyActivity extends ActionBarActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             image = (Bitmap) extras.get("data");
-            ImageView imgViewPhoto = (ImageView) findViewById(R.id.report_imgViewPhoto);
+            ImageView imgViewPhoto = (ImageView) findViewById(R.id.modify_imgViewPhoto);
             imgViewPhoto.setImageBitmap(image);
         }
     }
@@ -143,8 +134,11 @@ public class ModifyActivity extends ActionBarActivity {
         TextView description = (TextView)findViewById(R.id.modify_fieldDescription);
 
         Animal animal = new Animal(description.getText().toString(), listener.getType(), Util.bitmapToString(image));
+
+        Map<String, Animal> map = new HashMap<>();
+        map.put("" + id, animal);
+        sheltersRef.child("/" + shelterId + "/animals/" + id).setValue(animal);
         Intent intent = new Intent(ModifyActivity.this, AnimalsActivity.class);
-        intent.putExtra("animal", animal);
         startActivity(intent);
     }
 }
