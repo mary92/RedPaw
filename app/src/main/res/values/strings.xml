@@ -6,6 +6,7 @@
     <string name="type_prompt">Animal</string>
     <string name="shelter_login">Login</string>
     <string name="database_shelters">https://brilliant-inferno-9405.firebaseio.com/shelters</string>
+    <string name="database_accounts">https://brilliant-inferno-9405.firebaseio.com/accounts</string>
 
     <color name="white">#FFFFFF</color>
     <color name="red">#da5959</color>
