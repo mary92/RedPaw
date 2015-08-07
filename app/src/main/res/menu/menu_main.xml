@@ -9,7 +9,12 @@
     android:title="@string/shelter_login" />
 
     <item android:id="@+id/menu_settings"
-        android:title="@string/action_settings"
+        android:title="Settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/menu_add_shelter"
+        android:title="Add Shelter"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>
