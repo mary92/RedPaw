@@ -73,8 +73,8 @@
             android:name=".AnimalsActivity"
             android:label="Red Paw">
             <intent-filter>
-            <action android:name="android.intent.action.VIEW"/>
-        </intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".AddShelterActivity"
@@ -83,5 +83,12 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        </application>
+        <activity
+            android:name=".SignInActivity"
+            android:label="Red Paw">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>
