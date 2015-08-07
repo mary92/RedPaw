@@ -189,6 +189,12 @@ public class AnimalsActivity extends ActionBarActivity {
         startActivity(i);
     }
 
+    public void removeAnimal(View view) {
+        int position = listView.getPositionForView(view);
+        Log.d("carolina", "removed button pressed " + position);
+        sheltersDB.child("/" + account.getShelterId() + "/animals/" + position).removeValue();
+    }
+
     public class MyAnimalAdapter extends BaseAdapter {
 
         @Override
