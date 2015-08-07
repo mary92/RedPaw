@@ -17,6 +17,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.io.Serializable;
 
 
@@ -28,12 +30,17 @@ public class ModifyActivity extends ActionBarActivity {
     private Bitmap image;
     private AnimalSpinnerOnItemSelectListener listener;
     private int id;
+    private String shelterID;
+    Firebase sheltersRef;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
+
+        Firebase.setAndroidContext(this);
+        sheltersRef=new Firebase(getString(R.string.database_shelters) + "/");
 
         Spinner spinner = (Spinner)findViewById(R.id.modify_animalType);
         SpinnerAdapter adapter = new AnimalAdapter(ModifyActivity.this);
@@ -46,7 +53,8 @@ public class ModifyActivity extends ActionBarActivity {
         actionToolbar.setLogo(R.mipmap.ic_launcher);
 
         Animal animal = (Animal)getIntent().getSerializableExtra("animal");
-
+        shelterID = getIntent().getStringExtra("shelterId");
+        id = getIntent().getIntExtra("position", 0);
 
         // If we are editing an animal
         if(animal.getImg() != null || animal.getImg().equals("")){
