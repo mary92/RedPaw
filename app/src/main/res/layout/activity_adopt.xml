@@ -9,54 +9,63 @@
     <include
         android:id="@+id/adopt_toolbar"
         layout="@layout/toolbar"/>
-    <TextView
-        android:id="@+id/adopt_animalText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Type of Animal:"
-        android:layout_below="@id/adopt_toolbar"
-        android:layout_toLeftOf="@+id/adopt_btnSearch"/>
 
-    <Spinner
-        android:id="@+id/adopt_animalType"
-        android:prompt="@string/type_prompt"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/adopt_animalText"
-        android:layout_toLeftOf="@+id/adopt_btnSearch">
-    </Spinner>
-    
-    <TextView
-        android:id="@+id/adopt_shelterText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Shelter:"
-        android:layout_below="@id/adopt_animalType"
-        android:layout_toLeftOf="@+id/adopt_btnSearch"/>
-
-    <Spinner
-        android:id="@+id/adopt_shelter"
-        android:prompt="@string/type_prompt"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/adopt_shelterText"
-        android:layout_toLeftOf="@+id/adopt_btnSearch">
-    </Spinner>
-
-    <Button
-        android:id="@+id/adopt_btnSearch"
-        android:layout_below="@id/adopt_toolbar"
+    <RelativeLayout
+        android:id="@+id/type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="Search"/>
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:layout_below="@id/adopt_toolbar"
+        >
+
+        <TextView
+            android:id="@+id/adopt_animalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type of Animal:"
+            android:layout_alignParentLeft="true" />
+
+        <Spinner
+            android:id="@+id/adopt_animalType"
+            android:prompt="@string/type_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/adopt_animalText">
+        </Spinner>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/shelter"
+        android:layout_toRightOf="@id/type"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adopt_toolbar">
+
+        <TextView
+            android:id="@+id/adopt_shelterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Shelter:" />
+
+        <Spinner
+            android:id="@+id/adopt_shelter"
+            android:prompt="@string/type_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/adopt_shelterText">
+        </Spinner>
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/adopt_listViewResults"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_below="@+id/adopt_shelter"
+        android:layout_below="@id/type"
         android:layout_above="@+id/adopt_btnList">
     </ListView>
 
