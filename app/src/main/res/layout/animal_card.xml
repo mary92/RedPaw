@@ -21,6 +21,7 @@
         android:id="@+id/animalDescription"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
         android:layout_margin="5dp"
         android:layout_weight="20"
         android:layout_toRightOf="@+id/animalPic"
