@@ -78,7 +78,7 @@ public class AnimalsActivity extends ActionBarActivity {
 
             actionToolbar.addView(notificationsBtn);
 
-            notificationsBtn.setOnClickListener(new View.OnClickListener() {
+            notificationsBtn.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(AnimalsActivity.this, PickUpActivity.class);

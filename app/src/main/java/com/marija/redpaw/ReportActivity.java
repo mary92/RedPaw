@@ -134,7 +134,7 @@ public class ReportActivity extends ActionBarActivity {
                 Log.d("carolina", "Got location onLocationChanged");
 
                 // Tell the location manager that we don't want to know the location anymore
-                locationManager.removeUpdates(locationListener);
+                locationManager.removeUpdates(this);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -149,6 +149,9 @@ public class ReportActivity extends ActionBarActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
+                // Tell the location manager that we don't want to know the location anymore
+                locationManager.removeUpdates(this);
             }
         };
 
@@ -214,7 +217,8 @@ public class ReportActivity extends ActionBarActivity {
                 imageToUpload = image;
             }
 
-            Report report = new Report(fieldDescription.getText().toString(), spinnerListener.getType(), Util.bitmapToString(imageToUpload), lastKnownLocation);
+            Report report = new Report(fieldDescription.getText().toString(),
+                    spinnerListener.getType(), Util.bitmapToString(imageToUpload), lastKnownLocation);
 
             Map<String, Report> map = new HashMap<String, Report>();
             map.put(report.getTimestamp().toString(), report);
@@ -223,6 +227,13 @@ public class ReportActivity extends ActionBarActivity {
 
             // Tell the location manager that we don't want to know the location anymore
             locationManager.removeUpdates(locationListener);
+
+            Context context = getApplicationContext();
+            CharSequence text = "Animal successfully added!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
             Intent intent = new Intent(ReportActivity.this, MainActivity.class);
             startActivity(intent);
