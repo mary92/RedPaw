@@ -42,8 +42,8 @@ public class AnimalsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_animals);
 
         listView = (ListView)findViewById(R.id.animals_animalsInMyShelter);
-        MyAnimalAdapter listViewAdapter= new MyAnimalAdapter();
-        listView.setAdapter(listViewAdapter);
+        listAdapter= new MyAnimalAdapter();
+        listView.setAdapter(listAdapter);
 
         account = new Account("worker", "savethepets", "c154c57a-4b53-4b76-85e5-a2be9c3b111e");
 
