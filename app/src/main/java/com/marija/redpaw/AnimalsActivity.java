@@ -77,7 +77,7 @@ public class AnimalsActivity extends ActionBarActivity {
     private void addNotifications() {
         if (notificationsBtn == null) {
             notificationsBtn = new Button(getApplicationContext());
-            notificationsBtn.setText("3");
+            //notificationsBtn.setText("3");
 
             actionToolbar.addView(notificationsBtn);
 
@@ -85,6 +85,8 @@ public class AnimalsActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(AnimalsActivity.this, PickUpActivity.class);
+                    i.putExtra("shelterId",account.getShelterId());
+                    i.putExtra("animalNumber", listAdapter.getCount());
                     startActivity(i);
                 }
             });
@@ -162,11 +164,14 @@ public class AnimalsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_settings) {
             Intent intent = new Intent(AnimalsActivity.this, PickUpActivity.class);
+            intent.putExtra("shelterId",account.getShelterId());
+            intent.putExtra("animalNumber", listAdapter.getCount());
             startActivity(intent);
         } else if (id == R.id.menu_shelter_logout) {
             Firebase ref = sheltersDB.getParent();
             ref.unauth();
             Intent i = new Intent(AnimalsActivity.this, MainActivity.class);
+
             startActivity(i);
         };
 

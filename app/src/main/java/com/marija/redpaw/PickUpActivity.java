@@ -1,5 +1,6 @@
 package com.marija.redpaw;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -47,11 +48,19 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
 
     Bitmap image;
     AnimalSpinnerOnItemSelectListener listener;
+    String shelterId;
+    int animalNumber;
+    private Firebase referenceShelters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pickup);
+
+        Intent intent = getIntent();
+        shelterId = intent.getStringExtra("shelterId");
+        animalNumber = intent.getIntExtra("animalNumber", 0);
+
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.pickup_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
@@ -59,6 +68,9 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        referenceShelters = new Firebase(getString(R.string.database_shelters));
 
         // Get refernecse to shelters database
         Firebase.setAndroidContext(this);
@@ -192,6 +204,12 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                 imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_dog));
                 textView.setText("");
             }
+
+            Animal animal = report0.getAnimal();
+            referenceShelters.child(shelterId + "/animals/" + animalNumber).setValue(animal);
+            animalNumber++;
+            Log.d("loging","" + animalNumber);
+
             mMap.clear();
             marker0 = null;
             report0 = null;
