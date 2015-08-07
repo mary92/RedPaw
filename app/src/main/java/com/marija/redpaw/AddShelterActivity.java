@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
+import java.util.ArrayList;
+
 
 public class AddShelterActivity extends ActionBarActivity {
 
@@ -52,6 +54,8 @@ public class AddShelterActivity extends ActionBarActivity {
         shelter.setAddress(((EditText) findViewById(R.id.add_shelter_address)).getText().toString());
         shelter.setLongitude(Float.parseFloat(((EditText) findViewById(R.id.add_shelter_long)).getText().toString()));
         shelter.setLatitude(Float.parseFloat(((EditText) findViewById(R.id.add_shelter_lat)).getText().toString()));
+        shelter.setDescription(((EditText) findViewById(R.id.add_shelter_description)).getText().toString());
+        shelter.setAnimals(new ArrayList<Animal>());
 
         Firebase.setAndroidContext(this);
         Firebase referenceShelters=new Firebase(getString(R.string.database_shelters));

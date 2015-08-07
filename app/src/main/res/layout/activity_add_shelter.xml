@@ -19,6 +19,7 @@
         android:id="@+id/add_shelter_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:hint="Registered official ID of the Shelter"/>
 
     <EditText
@@ -31,6 +32,7 @@
         android:id="@+id/add_shelter_phone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:inputType="phone"
         android:hint="Phone number"/>
 
     <EditText
@@ -38,22 +40,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:hint="Phone number"/>
+        android:hint="Longitude"/>
     <EditText
         android:id="@+id/add_shelter_lat"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:hint="Phone number"/>
+        android:hint="Latitude"/>
 
-    <Button
-        android:id="@+id/add_shelter_btnLocate"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/add_shelter_description"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Locate"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:onClick="onClickShelterBtnLocate"/>
+        android:hint="Description"/>
 
     <Button
         android:id="@+id/add_shelter_submitBtn"
