@@ -42,6 +42,7 @@ public class AnimalsActivity extends ActionBarActivity {
     private MyAnimalAdapter listAdapter;
     private Firebase sheltersDB;
     private Firebase reportsDB;
+    private Firebase accountsDB;
     private Toolbar actionToolbar;
     Button notificationsBtn;
 
@@ -54,11 +55,11 @@ public class AnimalsActivity extends ActionBarActivity {
         listAdapter= new MyAnimalAdapter();
         listView.setAdapter(listAdapter);
 
-        account = new Account("worker", "savethepets", "8268");
-
         Firebase.setAndroidContext(this);
         sheltersDB = new Firebase(getString(R.string.database_shelters));
         reportsDB = new Firebase(getString(R.string.database_reports));
+
+        account = new Account(sheltersDB.getAuth().getUid(), "8268");
         addDBListeners();
 
         actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);

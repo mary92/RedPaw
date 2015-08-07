@@ -38,20 +38,24 @@
 
         <Button
             android:id="@+id/modify_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit"
-            android:onClick="editAnimal"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_mode_edit_black_24dp"
+            android:onClick="editAnimal"
+            android:layout_alignParentTop="true"
+            android:focusable="true"/>
 
         <Button
             android:id="@+id/remove_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remove"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_delete_black_24dp"
             android:layout_below="@id/modify_btn"
             android:layout_alignStart="@id/modify_btn"
             android:layout_alignEnd="@id/modify_btn"
-            android:onClick="removeAnimal"/>
+            android:layout_marginTop="20dp"
+            android:onClick="removeAnimal"
+            android:focusable="true"/>
 
     </RelativeLayout>
 

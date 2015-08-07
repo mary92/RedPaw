@@ -1,35 +1,27 @@
 package com.marija.redpaw;
 
+import java.io.Serializable;
+
 /**
  * Created by demouser on 8/6/15.
  */
-public class Account {
-    private String username;
-    private String password;
+public class Account implements Serializable{
+    private String uid;
     private String shelterId;
 
     public Account(){}
 
-    public Account(String username, String password, String shelterId) {
-        this.username = username;
-        this.password = password;
+    public Account(String uid, String shelterId) {
+        this.uid = uid;
         this.shelterId = shelterId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getShelterId() {
