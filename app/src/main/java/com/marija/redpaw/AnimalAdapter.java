@@ -43,7 +43,7 @@ public class AnimalAdapter extends BaseAdapter implements SpinnerAdapter {
         } else {
             view = (TextView)convertView;
         }
-
+        view.setPadding(80,30,80,30);
         view.setText(animals[position]);
         return view;
     }
