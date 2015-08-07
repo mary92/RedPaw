@@ -167,7 +167,8 @@ public class AdoptActivity extends ActionBarActivity {
                 // Create links to view objects.
                 viewHolder=new ViewHolder();
                 viewHolder.img=(ImageView)view.findViewById(R.id.adoptitem_imgViewPhoto);
-                viewHolder.description=(TextView)view.findViewById(R.id.adoptitem_description);
+                viewHolder.description=(TextView)view.findViewById(R.id.adoptItem_description);
+                viewHolder.type=(TextView)view.findViewById(R.id.adopitem_type);
                 viewHolder.shelter=(TextView)view.findViewById(R.id.adoptitem_shelter);
                 view.setTag(viewHolder);
             }
@@ -175,7 +176,8 @@ public class AdoptActivity extends ActionBarActivity {
             viewHolder.img.setImageBitmap(Util.stringToBitmap(currentPair.animal.getImg()));
             viewHolder.description.setText(currentPair.animal.getDescription());
             viewHolder.shelter.setText(currentPair.shelter.getName());
-            //viewHolder.shelter.setText();<---- Where do we get the shelter from?
+            viewHolder.type.setText(currentPair.animal.getType().toString());
+
             return view;
         }
     }
@@ -323,5 +325,6 @@ public class AdoptActivity extends ActionBarActivity {
         public ImageView img;
         public TextView description;
         public TextView shelter;
+        public TextView type;
     }
 }
