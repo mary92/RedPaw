@@ -16,8 +16,6 @@
         android:adjustViewBounds="true"
         android:layout_centerVertical="true"
         android:src="@drawable/default_dog"/>
-        android:layout_margin="8dp"
-        />
 
     <TextView
         android:id="@+id/animalDescription"
