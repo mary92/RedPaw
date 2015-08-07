@@ -1,6 +1,7 @@
 package com.marija.redpaw;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -68,11 +69,14 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                 reports = new ArrayList<Report>();
                 Report currentReport;
                 //ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
-
+                report0 = null;
+                marker0 =null;
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     currentReport = dataSnapshot1.getValue(Report.class);
-                    reports.add(currentReport);
-                    Log.d("izvestaj",currentReport.getTimestamp().toString());
+                    if (currentReport.getStatus() == Status.REPORTED) {
+                        reports.add(currentReport);
+                        Log.d("izvestaj", currentReport.getTimestamp().toString());
+                    }
                 }
                 if (mMap != null) {
                     updateMarkers(mMap, reports);
@@ -127,7 +131,7 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                 Report report = mMapMarkerIdReportPostion.get(marker);
                 updateInfo(report);
                 if (marker0 != null){
-                    marker0.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    marker0.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 }
                 marker0 = marker;
                 marker0.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -148,13 +152,13 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     private void updateMarkers(GoogleMap map, ArrayList<Report> reports) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         map.setMyLocationEnabled(true);
+        map.clear();
         mMapMarkerIdReportPostion = new HashMap<Marker, Report>();
-
         for (Report report : reports) {
             LatLng markerLatLng = new LatLng(report.getLatitude(), report.getLongitude());
             builder.include(markerLatLng);
             Marker marker = map.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                     .position(markerLatLng));
             mMapMarkerIdReportPostion.put(marker, report);
             if (report0 == null){
@@ -162,11 +166,12 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
                 marker0 = marker;
             }
         }
+        if (reports.isEmpty()) return;
         LatLngBounds bounds = builder.build();
         int padding = 0; // offset from edges of the map in pixels
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         map.moveCamera(cu);
-        if (report0 != null){
+        if (report0 != null && marker0 != null){
             updateInfo(report0);
             LatLng markerLatLng = new LatLng(report0.getLatitude(), report0.getLongitude());
             marker0.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -174,14 +179,15 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     }
 
     public void onPickUpClicked(View view){
-        if (marker0 != null) {
+        if (report0 != null) {
             //Animal animal = report0.getAnimal();
             report0.setStatus(Status.PICKED_UP);
             referenceReports.child(report0.getTimestamp().toString()).setValue(report0);
-
-            marker0.remove();
+            imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_dog));
+            textView.setText("");
             marker0 = null;
             report0 = null;
+
         }
 
     }
