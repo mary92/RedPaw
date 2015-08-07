@@ -1,8 +1,11 @@
 package com.marija.redpaw;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -35,6 +39,8 @@ public class AnimalsActivity extends ActionBarActivity {
     private ListView listView;
     private MyAnimalAdapter listAdapter;
     private Firebase sheltersDB;
+    private Toolbar actionToolbar;
+    Button notificationsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +51,39 @@ public class AnimalsActivity extends ActionBarActivity {
         listAdapter= new MyAnimalAdapter();
         listView.setAdapter(listAdapter);
 
-        account = new Account("worker", "savethepets", "c154c57a-4b53-4b76-85e5-a2be9c3b111e");
+        account = new Account("worker", "savethepets", "8268");
 
         Firebase.setAndroidContext(this);
         sheltersDB = new Firebase(getString(R.string.database_shelters));
         addDBListener();
 
-        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
+        actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
+        addNotifications();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.animals_toolbar);
         actionToolbar.setTitle("   All Animals");
+    }
+
+    private void addNotifications() {
+        if (notificationsBtn == null) {
+            notificationsBtn = new Button(getApplicationContext());
+            notificationsBtn.setText("3");
+
+            actionToolbar.addView(notificationsBtn);
+
+            notificationsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(AnimalsActivity.this, PickUpActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
     private void addDBListener() {
@@ -72,7 +95,6 @@ public class AnimalsActivity extends ActionBarActivity {
                 Shelter shelter;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     shelter = data.getValue(Shelter.class);
-                    Log.d("animals", shelter.getId());
                     if (account.getShelterId().equals(shelter.getId())) {
                         populateAnimalsList(shelter.getAnimals());
                     }
@@ -82,8 +104,10 @@ public class AnimalsActivity extends ActionBarActivity {
             }
 
             private void populateAnimalsList(List<Animal> animals) {
-                for (Animal pet:animals) {
-                    animalsInMyShelter.add(pet);
+                if(animals != null) {
+                    for (Animal pet : animals) {
+                        animalsInMyShelter.add(pet);
+                    }
                 }
             }
 
@@ -116,14 +140,12 @@ public class AnimalsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void editAnimal(View view) {
+    public void editAnimal(View v) {
         Intent i = new Intent(AnimalsActivity.this, ModifyActivity.class);
-        RelativeLayout v = (RelativeLayout) view.getParent();
-        AnimalCardHolder holder = (AnimalCardHolder) v.getTag();
-        i.putExtra("position", holder.position);
+        int position = listView.getPositionForView(v);
+        i.putExtra("position", position);
         i.putExtra("shelterId", account.getShelterId());
-        i.putExtra("animal", (Animal) listAdapter.getItem(holder.position));
-        Log.d("lavina", holder.position + "");
+        i.putExtra("animal", (Animal) listAdapter.getItem(position));
         startActivity(i);
     }
 

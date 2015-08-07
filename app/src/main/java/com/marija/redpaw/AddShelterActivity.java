@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
+import java.util.ArrayList;
+
 
 public class AddShelterActivity extends ActionBarActivity {
 
@@ -46,16 +48,19 @@ public class AddShelterActivity extends ActionBarActivity {
 
     public void onClickSubmitBtn(View view){
         Shelter shelter= new Shelter();
-        shelter.setId(((EditText) findViewById(R.id.add_shelter_id)).getText().toString());
+        String id=((EditText) findViewById(R.id.add_shelter_id)).getText().toString();
+        shelter.setId(id);
         shelter.setName(((EditText) findViewById(R.id.add_shelter_name)).getText().toString());
         shelter.setPhonenumber(((EditText) findViewById(R.id.add_shelter_phone)).getText().toString());
         shelter.setAddress(((EditText) findViewById(R.id.add_shelter_address)).getText().toString());
         shelter.setLongitude(Float.parseFloat(((EditText) findViewById(R.id.add_shelter_long)).getText().toString()));
         shelter.setLatitude(Float.parseFloat(((EditText) findViewById(R.id.add_shelter_lat)).getText().toString()));
+        shelter.setDescription(((EditText) findViewById(R.id.add_shelter_description)).getText().toString());
+        shelter.setAnimals(new ArrayList<Animal>());
 
         Firebase.setAndroidContext(this);
         Firebase referenceShelters=new Firebase(getString(R.string.database_shelters));
-        referenceShelters.push().setValue(shelter);
+        referenceShelters.child(id).setValue(shelter);
 
         Context context = getApplicationContext();
         CharSequence text = "Your shelter has been added.";

@@ -15,6 +15,7 @@
         android:weightSum="100"
         android:layout_margin="10dp"
         android:layout_below="@+id/report_toolbar"
+
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,7 +29,9 @@
                 android:id="@+id/report_imgViewPhoto"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="30"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_weight="40"
                 android:layout_gravity="top"
                 android:src="@drawable/placeholder"/>
 
@@ -38,7 +41,7 @@
                 android:layout_width="0dp"
                 android:text="Take Photo"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="40"
+                android:layout_weight="35"
                 android:layout_gravity="center_vertical"
                 android:onClick="onClickBtnUploadPhoto"/>
 
@@ -55,6 +58,8 @@
 
         <EditText
             android:id="@+id/report_fieldDescription"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="20"
@@ -63,7 +68,7 @@
             android:gravity="top"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:hint="A brief description"
+            android:hint="A brief description of the animal and its condition"
             android:text=""/>
 
         <RelativeLayout
@@ -83,7 +88,7 @@
                 android:id="@+id/report_btnReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Report"
+                android:text="Submit"
                 android:layout_alignParentRight="true"
                 android:onClick="onClickBtnReport"/>
 

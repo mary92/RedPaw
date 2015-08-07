@@ -3,32 +3,34 @@
     android:id = "@+id/animalCard"
     android:orientation="horizontal"
     android:background="#ffffff"
-    android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:layout_width="fill_parent"
     android:layout_height="100dp">
 
     <ImageView
         android:id="@+id/animalPic"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
         android:scaleType="centerCrop"
-        android:layout_marginLeft="8dp"
         android:adjustViewBounds="true"
         android:layout_centerVertical="true"
         android:src="@drawable/default_dog"/>
 
     <TextView
         android:id="@+id/animalDescription"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_centerVertical="true"
         android:layout_margin="5dp"
-        android:layout_weight="20"
-        android:layout_toRightOf="@+id/animalPic"
-        android:layout_toLeftOf="@+id/card_layout"/>
+        android:padding="5dp"
+        android:layout_toStartOf="@+id/card_layout"
+        android:layout_toEndOf="@+id/animalPic"/>
 
     <RelativeLayout
-        android:id="@id/card_layout"
+        android:id="@+id/card_layout"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginEnd="5dp"
@@ -39,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:onClick="editAnimal"/>
 
         <Button
             android:id="@+id/remove_btn"
@@ -52,7 +55,6 @@
             android:layout_alignEnd="@id/modify_btn"/>
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>
