@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -30,16 +31,24 @@ public class AdoptActivity extends ActionBarActivity {
     private ListView listView;
     private Firebase referenceShelters;
     private Type animalType;
+    private ArrayList<Shelter> shelters;
+    private Shelter shelter=new Shelter();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         animalsInShelter=new ArrayList<Pair>();
+        shelters=new ArrayList<Shelter>();
+        shelters.add(shelter);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adopt);
         // Get refernecse to shelters database
         Firebase.setAndroidContext(this);
         referenceShelters=new Firebase(getString(R.string.database_shelters));
+
+        //Set Default
+        animalType=Type.All;
+        shelter=null;
 
         // Add adapter to list view.
         listView=(ListView)findViewById(R.id.adopt_listViewResults);
@@ -50,6 +59,11 @@ public class AdoptActivity extends ActionBarActivity {
         Spinner spinner = (Spinner)findViewById(R.id.adopt_animalType);
         spinner.setAdapter(new AnimalAdapter(this, animals));
         spinner.setOnItemSelectedListener(new AnimalSpinnerListener());
+
+        // Add adapter, and action listener for type spinner.
+        Spinner shelterSpinner = (Spinner)findViewById(R.id.adopt_shelter);
+        shelterSpinner.setAdapter(new ShelterAdapter());
+        shelterSpinner.setOnItemSelectedListener(new ShelterSpinnerListener());
 
 
         // Add database event listener
@@ -101,13 +115,15 @@ public class AdoptActivity extends ActionBarActivity {
 
         private ArrayList<Pair> displayedAnimals = new ArrayList<>();
 
-        public void filterByType(Type type) {
+        public void filterByType(Type type, Shelter shelter) {
             displayedAnimals.clear();                
             for (Pair animal : animalsInShelter) {
-                    if (type==Type.All||animal.animal.getType().equals(type)) {
+                if (shelter.getName().equals("All")||animal.shelter.getName().equals(shelter.getName())){
+                    if (type == Type.All || animal.animal.getType().equals(type)) {
                         displayedAnimals.add(animal);
                     }
                 }
+            }
 
         }
 
@@ -160,21 +176,27 @@ public class AdoptActivity extends ActionBarActivity {
         @Override
         public void onDataChange(DataSnapshot snapshot) {
             animalsInShelter.clear();
+            shelters.clear();
             Shelter currentShelter;
             ArrayList<Shelter> tmpAnimal = new ArrayList<Shelter>((int) snapshot.getChildrenCount());
             // Go through all of the shelters.
             for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                 currentShelter = dataSnapshot1.getValue(Shelter.class);
                 // Go through all of the animals in this shelter.
-                for(Animal animal:currentShelter.getAnimals()){
-                        animalsInShelter.add(new Pair(animal,currentShelter));
-                        //shelters.add(currentShelter.getName());
+                if(currentShelter!=null) {
+                    shelters.add(currentShelter);
+                    if( currentShelter.getAnimals()!=null) {
+                        for (Animal animal : currentShelter.getAnimals()) {
+                            animalsInShelter.add(new Pair(animal, currentShelter));
+                        }
+                    }
                 }
             }
+            shelters.add(new Shelter());
             // Force the view to update.
 //            ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
             MyAdapter adapter = ((MyAdapter) listView.getAdapter());
-            adapter.filterByType(animalType);
+            adapter.filterByType(animalType, shelter);
             adapter.notifyDataSetChanged();
         }
 
@@ -212,7 +234,7 @@ public class AdoptActivity extends ActionBarActivity {
             }
             //referenceShelters.removeValueEventListener();
             MyAdapter adapter = ((MyAdapter) listView.getAdapter());
-            adapter.filterByType(animalType);
+            adapter.filterByType(animalType, shelter);
             adapter.notifyDataSetChanged();
 
         }
@@ -224,6 +246,60 @@ public class AdoptActivity extends ActionBarActivity {
 
     }
 
+    public class ShelterSpinnerListener implements AdapterView.OnItemSelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            for(Shelter curShelter:shelters) {
+                if (parent.getItemAtPosition(position).equals(curShelter.getName())) {
+                    shelter=curShelter;
+                }
+            }
+            //referenceShelters.removeValueEventListener();
+            MyAdapter adapter = ((MyAdapter) listView.getAdapter());
+            adapter.filterByType(animalType, shelter);
+            adapter.notifyDataSetChanged();
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            animalType=null; // Show all types.
+        }
+
+    }
+
+    public class ShelterAdapter extends BaseAdapter implements SpinnerAdapter {
+
+        @Override
+        public int getCount() {
+            return shelters.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return shelters.get(position%shelters.size()).getName();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position%shelters.size();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view;
+
+            if(convertView == null) {
+                view = (TextView) LayoutInflater.from(AdoptActivity.this).inflate(android.R.layout.simple_spinner_dropdown_item,null);
+            } else {
+                view = (TextView)convertView;
+            }
+            view.setPadding(80,30,80,30);
+            view.setText(shelters.get(position%shelters.size()).getName());
+            return view;
+        }
+    }
 
     /*
     Needed to show text for each animal.

@@ -17,7 +17,7 @@ public class Shelter {
     private double latitude;
     private double longitude;
 
-    public Shelter() {}
+    public Shelter() {name="All";}
 
     public String getId() {
         return id;

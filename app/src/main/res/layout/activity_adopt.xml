@@ -18,6 +18,14 @@
         android:layout_below="@id/adopt_toolbar"
         android:layout_toLeftOf="@+id/adopt_btnSearch">
     </Spinner>
+    <Spinner
+        android:id="@+id/adopt_shelter"
+        android:prompt="@string/type_prompt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adopt_animalType"
+        android:layout_toLeftOf="@+id/adopt_btnSearch">
+    </Spinner>
 
     <Button
         android:id="@+id/adopt_btnSearch"
@@ -32,7 +40,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_below="@+id/adopt_animalType"
+        android:layout_below="@+id/adopt_shelter"
         android:layout_above="@+id/adopt_btnList">
     </ListView>
 
