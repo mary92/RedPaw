@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context="com.marija.redpaw.AdoptMapActivity">
 
     <include
@@ -17,15 +16,7 @@
         android:layout_alignParentLeft="true"
         android:text="View List"
         android:onClick="onListButtonClicked" />
-    <Button
-        android:id="@+id/adoptmap_btnMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/adoptmap_btnList"
-        android:text="View Map"
-        android:clickable="false"
-        />
+
 
     <fragment
         android:id="@+id/map"
