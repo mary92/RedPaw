@@ -10,11 +10,19 @@
         layout="@layout/toolbar"/>
 
     <ListView
-        android:id="@+id/animalsInMyShelter"
+        android:id="@+id/animals_animalsInMyShelter"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/animals_toolbar"
         android:layout_marginTop="8dp">
     </ListView>
 
+    <Button
+        android:id="@+id/animals_addAnimal_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="addAnimal"
+        />
 </RelativeLayout>
