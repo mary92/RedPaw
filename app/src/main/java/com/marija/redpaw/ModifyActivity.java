@@ -79,7 +79,7 @@ public class ModifyActivity extends ActionBarActivity {
             spinner.setSelection(position);
         }
 
-        EditText et = (EditText)findViewById(R.id.report_fieldDescription);
+        EditText et = (EditText)findViewById(R.id.modify_fieldDescription);
         et.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
