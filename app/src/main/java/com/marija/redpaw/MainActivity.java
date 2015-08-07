@@ -1,19 +1,59 @@
 package com.marija.redpaw;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.content.Context;
+import android.content.Intent;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.firebase.client.Firebase;
 
 
 public class MainActivity extends ActionBarActivity {
+    private final static int FOUND = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+        Firebase.setAndroidContext(this);
 
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        actionToolbar.setTitle("   Red Paw");
+
+        Animator anim = AnimatorInflater.loadAnimator(this,R.animator.logo_animator);
+        anim.setTarget(findViewById(R.id.main_icon));
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
+    }
+
+    public void onClickBtnFound(View view){
+        Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+        startActivityForResult(intent, FOUND);
+    }
+
+    public void onClickBtnAdopt(View view){
+        Intent intent = new Intent(MainActivity.this, AdoptActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -30,11 +70,25 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatemen
-        if (id == R.id.action_settings) {
-            return true;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_settings) {
+            Intent intent = new Intent(MainActivity.this, PickUpActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_shelter_login) {
+            Intent i = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(i);
+        }else if(id==R.id.menu_add_shelter){
+            Intent i = new Intent(MainActivity.this, AddShelterActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickLogo(View view) {
+        Animator anim = AnimatorInflater.loadAnimator(this,R.animator.logo_animator);
+        anim.setTarget(view);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
     }
 }

@@ -1,11 +1,58 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include
+        android:id="@+id/main_toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/main_iconlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_toolbar"
+        android:weightSum="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/main_icon"
+            android:layout_weight=".75"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:onClick="onClickLogo"
+            android:src="@drawable/highrespaw" />
+
+        <Button
+            android:id="@+id/main_btnFound"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight=".05"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickBtnFound"
+            android:outlineProvider="background"
+            android:text="I Found a Stray"
+            android:layout_below="@id/main_iconlayout"/>
+
+        <Button
+            android:id="@+id/main_btnAdopt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight=".05"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickBtnAdopt"
+            android:text="I want to adopt"
+            android:layout_below="@id/main_btnFound" />
+
+    </LinearLayout>
 
 </RelativeLayout>

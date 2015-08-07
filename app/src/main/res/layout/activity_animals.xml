@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnimalsActivity">
+
+    <include
+        android:id="@+id/animals_toolbar"
+        layout="@layout/toolbar"/>
+
+    <ListView
+        android:id="@+id/animals_animalsInMyShelter"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/animals_toolbar"
+        android:layout_marginTop="8dp">
+    </ListView>
+
+    <Button
+        android:id="@+id/animals_addAnimal_btn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_add_circle_outline_black_48dp"
+        android:onClick="addAnimal"
+        />
+</RelativeLayout>
