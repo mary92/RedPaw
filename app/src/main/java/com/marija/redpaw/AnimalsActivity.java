@@ -43,7 +43,7 @@ public class AnimalsActivity extends ActionBarActivity {
         MyAnimalAdapter listViewAdapter= new MyAnimalAdapter();
         listView.setAdapter(listViewAdapter);
 
-        account = new Account("worker", "savethepets", "90b88b9d-af39-4c3a-ae9e-04b632209ae6");
+        account = new Account("worker", "savethepets", "c154c57a-4b53-4b76-85e5-a2be9c3b111e");
 
         Firebase.setAndroidContext(this);
         sheltersDB = new Firebase(getString(R.string.database_shelters));
