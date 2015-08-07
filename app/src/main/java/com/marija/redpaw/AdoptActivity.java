@@ -116,9 +116,14 @@ public class AdoptActivity extends ActionBarActivity {
         private ArrayList<Pair> displayedAnimals = new ArrayList<>();
 
         public void filterByType(Type type, Shelter shelter) {
+            if(type==null){
+                type=Type.All;}
+            if(shelter==null){
+                shelter=new Shelter();
+            }
             displayedAnimals.clear();                
             for (Pair animal : animalsInShelter) {
-                if (shelter.getName().equals("All")||animal.shelter.getName().equals(shelter.getName())){
+                if (animal!=null&&(shelter.getName().equals("All")||animal.shelter.getName().equals(shelter.getName()))){
                     if (type == Type.All || animal.animal.getType().equals(type)) {
                         displayedAnimals.add(animal);
                     }
@@ -196,6 +201,10 @@ public class AdoptActivity extends ActionBarActivity {
             // Force the view to update.
 //            ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
             MyAdapter adapter = ((MyAdapter) listView.getAdapter());
+            if(animalType==null||shelter==null){
+                animalType=Type.All;
+                shelter=new Shelter();
+            }
             adapter.filterByType(animalType, shelter);
             adapter.notifyDataSetChanged();
         }
