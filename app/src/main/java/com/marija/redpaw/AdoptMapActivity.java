@@ -11,11 +11,13 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -98,17 +100,21 @@ public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCal
         }
     }
     private void updateMarkers(GoogleMap map,ArrayList<Shelter> shelters){
-
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (Shelter shelter:shelters) {
             LatLng markerLatLng = new LatLng(shelter.getLatitude(), shelter.getLongitude());
-
+            builder.include(markerLatLng);
             map.setMyLocationEnabled(true);
            // map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng, 13));
 
             map.addMarker(new MarkerOptions()
-                    .title("Sydney")
-                    .snippet("The most populous city in Australia.")
+                    .title(shelter.getName())
+                    .snippet(shelter.getAddress() + "\n" + shelter.getPhonenumber())
                     .position(markerLatLng));
         }
+        LatLngBounds bounds = builder.build();
+        int padding = 0; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        map.moveCamera(cu);
     }
 }

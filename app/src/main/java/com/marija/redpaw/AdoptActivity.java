@@ -30,7 +30,6 @@ public class AdoptActivity extends ActionBarActivity {
     private ListView listView;
     private Firebase referenceShelters;
     private Type animalType;
-    //private ArrayList<String> shelters;
 
 
     @Override
@@ -103,8 +102,8 @@ public class AdoptActivity extends ActionBarActivity {
         private ArrayList<Pair> displayedAnimals = new ArrayList<>();
 
         public void filterByType(Type type) {
-            displayedAnimals.clear();
-                for (Pair animal : animalsInShelter) {
+            displayedAnimals.clear();                
+            for (Pair animal : animalsInShelter) {
                     if (type==Type.All||animal.animal.getType().equals(type)) {
                         displayedAnimals.add(animal);
                     }

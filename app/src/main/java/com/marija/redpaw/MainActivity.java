@@ -1,5 +1,6 @@
 package com.marija.redpaw;
 
+import android.content.Context;
 import android.content.Intent;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -10,12 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.firebase.client.Firebase;
 
 
 public class MainActivity extends ActionBarActivity {
+    private final static int FOUND = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickBtnFound(View view){
         Intent intent = new Intent(MainActivity.this, ReportActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, FOUND);
     }
 
     public void onClickBtnAdopt(View view){
@@ -63,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(MainActivity.this, PickUpActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_shelter_login) {
-            Intent i = new Intent(MainActivity.this, AnimalsActivity.class);
+            Intent i = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(i);
         }else if(id==R.id.menu_add_shelter){
             Intent i = new Intent(MainActivity.this, AddShelterActivity.class);

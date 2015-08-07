@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".AdoptActivity">
 
     <include
@@ -30,8 +31,8 @@
         android:id="@+id/adopt_listViewResults"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/adopt_animalType"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/adopt_animalType"
         android:layout_above="@+id/adopt_btnList">
     </ListView>
 
