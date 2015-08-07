@@ -3,6 +3,7 @@ package com.marija.redpaw;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,23 +33,25 @@ public class AdoptActivity extends ActionBarActivity {
     private Firebase referenceShelters;
     private Type animalType;
     private ArrayList<Shelter> shelters;
-    private Shelter shelter=new Shelter();
+    private Shelter shelter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Set Default
+        animalType=Type.All;
+        shelter=new Shelter();
+
         animalsInShelter=new ArrayList<Pair>();
         shelters=new ArrayList<Shelter>();
         shelters.add(shelter);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adopt);
         // Get refernecse to shelters database
         Firebase.setAndroidContext(this);
         referenceShelters=new Firebase(getString(R.string.database_shelters));
 
-        //Set Default
-        animalType=Type.All;
-        shelter=null;
 
         // Add adapter to list view.
         listView=(ListView)findViewById(R.id.adopt_listViewResults);
@@ -304,8 +307,11 @@ public class AdoptActivity extends ActionBarActivity {
             } else {
                 view = (TextView)convertView;
             }
-            view.setPadding(80,30,80,30);
-            view.setText(shelters.get(position%shelters.size()).getName());
+            view.setPadding(80, 30, 80, 30);
+            if(shelters!=null) {
+                view.setText(shelters.get(position % shelters.size()).getName());
+            }
+
             return view;
         }
     }
