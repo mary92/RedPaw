@@ -65,6 +65,12 @@ public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCal
         setSupportActionBar(actionToolbar);
         actionToolbar.setLogo(R.mipmap.ic_launcher);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.adoptmap_toolbar);
+        actionToolbar.setTitle("   Shelters");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

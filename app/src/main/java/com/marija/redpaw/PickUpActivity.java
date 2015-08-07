@@ -96,7 +96,7 @@ public class PickUpActivity extends ActionBarActivity implements OnMapReadyCallb
     public void onResume() {
         super.onResume();
         android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.pickup_toolbar);
-        actionToolbar.setTitle("   Red paw");
+        actionToolbar.setTitle("   Pick up");
     }
 
 

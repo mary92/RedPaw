@@ -25,6 +25,15 @@ public class SignInActivity extends ActionBarActivity {
         setContentView(R.layout.activity_sign_in);
 
         ref = new Firebase("https://brilliant-inferno-9405.firebaseio.com");
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.signin_toolbar);
+        setSupportActionBar(actionToolbar);
+        actionToolbar.setLogo(R.mipmap.ic_launcher);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        android.support.v7.widget.Toolbar actionToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.signin_toolbar);
+        actionToolbar.setTitle("   Red paw");
     }
 
     @Override
