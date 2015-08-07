@@ -12,11 +12,12 @@ import android.widget.TextView;
  * Created by demouser on 8/6/15.
  */
 public class AnimalAdapter extends BaseAdapter implements SpinnerAdapter {
-    String[] animals = {"Cat", "Dog", "Other"};
+    String[] animals ;
     Activity which;
 
-    public AnimalAdapter(Activity _which) {
+    public AnimalAdapter(Activity _which, String[] animals) {
         which = _which;
+        this.animals=animals;
     }
 
     @Override

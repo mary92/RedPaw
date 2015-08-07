@@ -25,6 +25,7 @@ import java.util.ArrayList;
  * Created by demouser on 8/6/15.
  */
 public class AdoptActivity extends ActionBarActivity {
+    private String[] animals= {"Cat", "Dog", "Other", "All"};
     private ArrayList<Pair> animalsInShelter;
     private ListView listView;
     private Firebase referenceShelters;
@@ -47,7 +48,7 @@ public class AdoptActivity extends ActionBarActivity {
 
         // Add adapter, and action listener for type spinner.
         Spinner spinner = (Spinner)findViewById(R.id.adopt_animalType);
-        spinner.setAdapter(new AnimalAdapter(this));
+        spinner.setAdapter(new AnimalAdapter(this, animals));
         spinner.setOnItemSelectedListener(new AnimalSpinnerListener());
 
 
@@ -98,28 +99,41 @@ public class AdoptActivity extends ActionBarActivity {
 
     public class MyAdapter extends BaseAdapter {
 
+        private ArrayList<Pair> displayedAnimals = new ArrayList<>();
+
+        public void filterByType(Type type) {
+            displayedAnimals.clear();
+            if(type!=null) {
+                for (Pair animal : animalsInShelter) {
+                    if (animal.animal.getType().equals(type)) {
+                        displayedAnimals.add(animal);
+                    }
+                }
+            }
+        }
+
         @Override
         public int getCount() {
-            return animalsInShelter.size();
+            return displayedAnimals.size();
         }
 
         @Override
         public Object getItem(int position) {
 
-            return animalsInShelter.get(position%animalsInShelter.size());
+            return displayedAnimals.get(position%displayedAnimals.size());
         }
 
         @Override
         public long getItemId(int position) {
 
-            return position % animalsInShelter.size() ;
+            return position % displayedAnimals.size() ;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view ;
             ViewHolder viewHolder;
-            Pair currentPair=animalsInShelter.get(position%animalsInShelter.size());
+            Pair currentPair=displayedAnimals.get(position%displayedAnimals.size());
             // Reuse views.
             if(convertView!=null ){
                 view=convertView;
@@ -162,7 +176,10 @@ public class AdoptActivity extends ActionBarActivity {
                 }
             }
             // Force the view to update.
-            ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
+//            ((MyAdapter) listView.getAdapter()).notifyDataSetChanged();
+            MyAdapter adapter = ((MyAdapter) listView.getAdapter());
+            adapter.filterByType(animalType);
+            adapter.notifyDataSetChanged();
         }
 
         @Override
@@ -192,11 +209,16 @@ public class AdoptActivity extends ActionBarActivity {
                 animalType=Type.Dog;
             } else if (parent.getItemAtPosition(position).equals("Cat")) {
                 animalType=Type.Cat;
-            } else {
+            } else if (parent.getItemAtPosition(position).equals("Other")) {
                 animalType=Type.Other;
+            }else{
+                animalType=null;
             }
             //referenceShelters.removeValueEventListener();
-            referenceShelters.addValueEventListener(new DBEventListener());
+            MyAdapter adapter = ((MyAdapter) listView.getAdapter());
+            adapter.filterByType(animalType);
+            adapter.notifyDataSetChanged();
+
         }
 
         @Override
