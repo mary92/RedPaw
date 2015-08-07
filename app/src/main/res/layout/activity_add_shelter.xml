@@ -33,6 +33,19 @@
         android:layout_height="wrap_content"
         android:hint="Phone number"/>
 
+    <EditText
+        android:id="@+id/add_shelter_long"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Phone number"/>
+    <EditText
+        android:id="@+id/add_shelter_lat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Phone number"/>
+
     <Button
         android:id="@+id/add_shelter_btnLocate"
         android:layout_width="wrap_content"
