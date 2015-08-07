@@ -35,7 +35,6 @@ public class AdoptMapActivity extends ActionBarActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-      //  shelters = new ArrayList<Shelter>();
         // Get refernecse to shelters database
         Firebase.setAndroidContext(this);
         referenceShelters = new Firebase(getString(R.string.database_shelters));
